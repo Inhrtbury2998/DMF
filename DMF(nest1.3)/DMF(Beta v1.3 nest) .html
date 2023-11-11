@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="Zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开源龙日导航程序DMF</title>
+    <link rel="stylesheet" href="DMF(Beta v1.3) .css">
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+    <div class="header-menu">
+        <ul class="menu">
+            <div></div>
+            <li class="menu-1" id="1"><a href="#">计算界面</a></li>
+            <li class="menu-2" id="2"><a href="#">设置</a></li>
+        </ul>
+    </div>
+    <div class="index">
+        <li id="help" class="icon"></li>
+        <div id=help-index>
+            <li id="close" class="icon"></li>
+            <div class="text">
+                <h3>帮助</h3>
+                <h5>
+                    <p>点图导航：点击图片可自动获取坐标</p>
+                    <p>手动输入：在输入框输入对应的坐标，支持带经纬度格式（游戏中按i查看经纬度）和坐标轴格式</p>
+                    <p>快捷计算：点击按钮，自动输入对应地点的经纬度</p>
+                    <p>结果查看：输入完坐标后点击“计算”，页面底部会出现两条信息，第一行是前进方向（游戏中按“esc”，设置->游戏->开启静态罗盘，即可让方向始终显示在游戏顶部），另一行是前进距离</p>
+                    <p>设置：控制对应功能是否开启</p>
+                    <p class="furthermore">程序开发：@Kerrrod。有bug或瑕疵欢迎反馈（虽然这个界面就有小瑕疵XD)QQ:2721391079</p>
+                    <p class="furthermore">特别鸣谢：@Hati @Slientdragon</p>
+                    <p class="furthermore">本作品未经授权禁止用于一切商业行为 地图所有权归@Hati所有</p>
+                </h1>
+            </div>
+        </div>
+        <div class="mask"></div>
+        <div class="Img">
+            <div class="div-small" style="height: 459px; width: 459px;">
+                <img src="image/x.bmp" class="ten" id="y" alt="" style="left: -50%;top: 0px;" draggable="false">
+                <img src="image/y.bmp" class="ten" id="x" alt="" style="left: 0px;top: -50%;" draggable="false">
+                <img src="image/map-small.bmp" class="small-img" alt="" draggable="false">
+            </div>
+            <div class="" id="big" style="border:3px solid rgb(226, 116, 37);">
+                <img src="image/map-qq.jpg" alt="">
+            </div>
+        </div>
+        <div class="div">
+            <input class="start-x" placeholder="请输入起点的X坐标(带经纬)">
+            <p><input class="start-y" placeholder="请输入起点的Y坐标(带经纬)"></p>
+            <input class="end-x" placeholder="请输入目的地的X坐标(带经纬)">
+            <p><input class="end-y" placeholder="请输入目的地的Y坐标(带经纬)"></p>
+        </div>
+        <div>
+            <button class="calculating">计算</button>
+        </div>
+        <div class="Keyborad">
+            <div class="start">
+                起点：
+                <button class="start-big-rock">大石头</button>
+                <button class="start-arch">拱门</button>
+                <button class="start-mushroom-river-origin">蘑菇河源头</button>
+                <button class="start-mid-lank">湖心</button>
+                <button class="start-fire-dragons-valley-head">火龙谷头</button>
+                <button class="start-big-tree">巨树</button>
+                <button class="start-tree-hole">树洞</button>
+                <button class="start-swamp">沼泽</button>
+                <button class="start-crater">陨石坑</button>
+            </div>
+            <div class="end">
+                终点：
+                <button class="end-big-rock">大石头</button>
+                <button class="end-arch">拱门</button>
+                <button class="end-mushroom-river-origin">蘑菇河源头</button>
+                <button class="end-mid-lank">湖心</button>
+                <button class="end-fire-dragons-valley-head">火龙谷头</button>
+                <button class="end-big-tree">巨树</button>
+                <button class="end-tree-hole">树洞</button>
+                <button class="end-swamp">沼泽</button>
+                <button class="end-crater">陨石坑</button>
+            </div>
+        </div>
+        <span class="Direction"></span>
+        <span class="distance"></span>
+    </div>
+    <div class="set">
+        <ul>
+            <li id="Img"><span class="img-set">图片</span><span class="left"></span><span class="text">开</span><span
+                    class="right"></span></li>
+            <li id="Keyboard"><span class="keyboard-set">快捷键</span><span class="left"></span><span
+                    class="text">开</span><span class="right"></span></li>
+            <li id="Num"><span class="num-set">手动输入</span><span class="left"></span><span class="text">开</span><span
+                    class="right"></span></li>
+        </ul>
+        <form>
+            <button class="useset">运用</button>
+        </form>
+
+    </div>
+    <script>
+        function a(a, b) {
+            let Direction;
+            Direction = Math.atan(b / a) * 180 / Math.PI;
+            console.log(Sx, x0);
+            if (Sx - x0 > 0) {
+                if (Sy - y0 > 0) {
+                    Direction = "W偏S:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                } else {
+                    Direction = "W偏N:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                }
+            } else {
+                if (Sy - y0 > 0) {
+                    Direction = "E偏S:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                } else {
+                    Direction = "E偏N:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                }
+            }
+            return (Direction);
+        }
+        let x0;
+        let y0;
+        let Sy;
+        let Sx;
+        let set = false;
+        const img_size = 4;
+        let set_Option = [true, true, true];//img,keyborad,num
+        // 获取元素
+        let div = document.querySelector('.div');
+        let big_img = document.querySelector('#big').querySelector('img');
+        let big_div = document.querySelector('#big');
+        let small_img = document.querySelector('.small-img');
+        let div_small = document.querySelector('.div-small');
+        let start_div = document.querySelector('.start');
+        let end_div = document.querySelector('.end');
+        let yz = document.querySelector('#y');
+        let xz = document.querySelector('#x');
+        let start_big_rock = document.querySelector('.start-big-rock');
+        let start_arch = document.querySelector('.start-arch');
+        let start_mushroom_river_origin = document.querySelector('.start-mushroom-river-origin');
+        let start_mid_lank = document.querySelector('.start-mid-lank');
+        let start_fire_dragons_valley_head = document.querySelector('.start-fire-dragons-valley-head');
+        let start_big_tree = document.querySelector('.start-big-tree');
+        let start_tree_hole = document.querySelector('.start-tree-hole');
+        let start_swamp = document.querySelector('.start-swamp');
+        let start_crater = document.querySelector('.start-crater');
+        let end_big_rock = document.querySelector('.end-big-rock');
+        let end_arch = document.querySelector('.end-arch');
+        let end_mushroom_river_origin = document.querySelector('.end-mushroom-river-origin');
+        let end_mid_lank = document.querySelector('.end-mid-lank');
+        let end_fire_dragons_valley_head = document.querySelector('.end-fire-dragons-valley-head');
+        let end_big_tree = document.querySelector('.end-big-tree');
+        let end_tree_hole = document.querySelector('.end-tree-hole');
+        let end_swamp = document.querySelector('.end-swamp');
+        let end_crater = document.querySelector('.end-crater');
+        let j = document.querySelector('.calculating');
+        let startX = document.querySelector('.start-x');
+        let startY = document.querySelector('.start-y');
+        let endX = document.querySelector('.end-x');
+        let endY = document.querySelector('.end-y');
+        let output = document.querySelector('.output');
+        let outputDirection = document.querySelector('.Direction');
+        let output_distance = document.querySelector('.distance');
+        let zhuangtai = 0;
+        $('ul div').attr('class', 'li1-border');
+        $('.set').hide();
+        div_small.addEventListener('mousemove', function (e) {
+            x = e.pageX;
+            y = e.pageY;
+            this.style.cursor = 'none';
+            big_div.style.width = div_small.style.width;
+            big_div.style.height = div_small.style.height;
+            yz.style.top = (e.pageY - div_small.offsetTop) + 'px';
+            xz.style.left = (e.pageX - div_small.offsetLeft) + 'px';
+            big_div.style.display = 'inline-block';
+            big_img.style.left = - (e.pageX - div_small.offsetLeft) * img_size + 234.5 + "px";
+            big_img.style.top = - (e.pageY - div_small.offsetTop) * img_size + 234.5 + "px";
+            stay = 0;
+        })
+        div_small.addEventListener('mouseout', function () {
+            if (stay == 0) {//这stay就是一个bug，但是它报错还修好了一个bug
+                big_div.style.display = 'none';
+                stay = 1;
+            }
+
+        })
+        $('ul li:eq(1)').hover(function () {
+            $('ul div').attr('class', 'li2-border');
+        })
+        $('ul li:eq(0)').hover(function () {
+            $('ul div').attr('class', 'li1-border');
+        })
+        $('.useset').click(function (e) {//运用被点击后运用设置
+            e.preventDefault();
+            set_Option[0] ? $('.Img').show() : $('.Img').hide();
+            set_Option[1] ? $('.Keyborad').show() : $('.Keyborad').hide();
+            set_Option[2] ? $('.div').show() : $('.div').hide();
+            console.log(set_Option);
+        })
+        for (let i = 0; i < $('.set ul li').length; i++) {
+            $('.set ul li').eq(i).click(function () {
+                let li = $('.set ul li').eq(i);
+                set_Option[i] = !set_Option[i];
+                console.log(li.children(1).eq(1).css('opacity'));
+                if (set_Option[i]) {
+                    li.children(1).eq(1).css('opacity', 0.7);
+                    li.children(1).eq(3).css('opacity', 0.3);
+                } else {
+                    li.children(1).eq(3).css('opacity', 0.7);
+                    li.children(1).eq(1).css('opacity', 0.3);
+                }
+                set_Option[i] ? li[0].children[2].innerHTML = '开' : li[0].children[2].innerHTML = '关';
+            })
+            $('.set ul li').eq(i).hover(function () {
+                $('.set ul li').attr('id', '');
+                $('.set ul li').eq(i).attr('id', 'on');
+            })
+        }
+        div_small.addEventListener('click', function (e) {
+            if (zhuangtai == 0) {
+                let a;
+                function have_li() {
+                    if (!div_small.children[3]) {
+                        return function () {
+                            let img_dian1 = document.createElement('li');
+                            div_small.insertBefore(img_dian1, div_small.children[0]);
+                            img_dian1.className = 'li';
+                            img_dian1.setAttribute('id', '1');
+                            return (img_dian1);
+                        }
+                        return (a());
+                    } else {
+                        return function () {
+                            let img_dian1 = div_small.children[1];
+                            img_dian1.className = 'li';
+                            return (img_dian1);
+                        }
+
+                    }
+                }
+                let img_dian1 = have_li()();
+                a = img_dian1.parentNode.style.width.substring(0, img_dian1.parentNode.style.width.length - 2);//div_small.width
+                Sx = Math.round((e.pageX - a / 2 - img_dian1.parentNode.offsetLeft) * 3.49);
+                console.log(Sx);
+                img_dian1.style.left = e.pageX - img_dian1.parentNode.offsetLeft - 3 + "px";
+                a = img_dian1.parentNode.style.height.substring(0, img_dian1.parentNode.style.height.length - 2);
+                Sy = Math.round((a - e.pageY + img_dian1.parentNode.offsetTop - a / 2) * 3.49);
+                img_dian1.style.top = e.pageY - img_dian1.parentNode.offsetTop - 3 + "px";
+                zhuangtai = 1;
+            } else if (zhuangtai == 1) {
+                let a;
+                function have_li() {
+                    if (!div_small.children[4]) {
+                        return function () {
+                            let img_dian2 = document.createElement('li');
+                            div_small.insertBefore(img_dian2, div_small.children[0]);
+                            img_dian2.className = 'li';
+                            img_dian2.setAttribute('id', '2');
+                            return (img_dian2);
+                        }
+                        return (a());
+                    } else {
+                        return function () {
+                            let img_dian2 = div_small.children[0];
+                            img_dian2.className = 'li';
+                            return (img_dian2);
+                        }
+
+                    }
+                }
+                let img_dian2 = have_li()();
+                a = img_dian2.parentNode.style.width.substring(0, img_dian2.parentNode.style.width.length - 2);//div_small.width
+                x0 = Math.round((e.pageX - a / 2 - img_dian2.parentNode.offsetLeft) * 3.49);
+                a = img_dian2.parentNode.style.height.substring(0, img_dian2.parentNode.style.height.length - 2);//div_small.width
+                y0 = Math.round((a - e.pageY + img_dian2.parentNode.offsetTop - a / 2) * 3.49);
+                img_dian2.style.left = e.pageX - img_dian2.parentNode.offsetLeft - 3 + "px";
+                img_dian2.style.top = e.pageY - img_dian2.parentNode.offsetTop - 3 + "px";
+                zhuangtai = -1;
+            } else {
+                const li = document.querySelectorAll('.li');
+                for (let i = 0; i <= li.length - 1; i++) {
+                    li[i].className = "noli";
+                }
+                zhuangtai = 0;
+            }
+            startX.value = Sx;
+            startY.value = Sy;
+            endY.value = y0;
+            endX.value = x0;
+        })
+        $('#help').click(function(){
+            $('#help-index').show();
+            $('.mask').show();
+        })
+        $('#close').click(function(){
+            $('#help-index').hide();
+            $('.mask').hide();
+        })
+        $('.menu-2').click(function (e) {
+            e.preventDefault();
+            if (!set) {
+                $('body').children().hide();
+                $('div').eq(0).show();
+                $('div:last').show();
+                set = !set;
+            }
+        })
+        $('.menu-1').click(function (e) {
+            e.preventDefault();
+            if (set) {
+                $('body').children().hide();
+                $('div').eq(0).show();
+                $('body').children(1).show();
+                console.log($('body').children(1));
+                $('div:last').hide();
+                set = !set;
+            }
+        })
+        //按键快捷输入坐标
+        function shortcut(X, Y, Class) {
+            if (Class == 'start') {
+                startX.value = '';
+                startY.value = '';
+                startX.value = X;
+                startY.value = Y;
+            } else if (Class == 'end') {
+                endX.value = '';
+                endY.value = '';
+                endX.value = X;
+                endY.value = Y;
+            }
+        }
+        start_big_rock.onclick = function () {
+            shortcut('5e', '60s', 'start');
+        }
+        start_arch.onclick = function () {
+            shortcut('54e', '255n', 'start');
+        }
+        start_mushroom_river_origin.onclick = function () {
+            shortcut('32w', '322s', 'start');
+        }
+        start_mid_lank.onclick = function () {
+            shortcut('117e', '122n', 'start');
+        }
+        start_fire_dragons_valley_head.onclick = function () {
+            shortcut('146e', '588s', 'start');
+        }
+        start_big_tree.onclick = function () {
+            shortcut('190e', '223n', 'start');
+        }
+        start_tree_hole.onclick = function () {
+            shortcut('340e', '150n', 'start');
+        }
+        start_swamp.onclick = function () {
+            shortcut('528w', '332n', 'start');
+        }
+        start_crater.onclick = function () {
+            shortcut('146e', '320s', 'start');
+        }
+        end_big_rock.onclick = function () {
+            shortcut('5e', '60s', 'end');
+        }
+        end_arch.onclick = function () {
+            shortcut('54e', '255n', 'end');
+        }
+        end_mushroom_river_origin.onclick = function () {
+            shortcut('32w', '322s', 'end');
+        }
+        end_mid_lank.onclick = function () {
+            shortcut('117e', '122n', 'end');
+        }
+        end_fire_dragons_valley_head.onclick = function () {
+            shortcut('146e', '588s', 'end');
+        }
+        end_big_tree.onclick = function () {
+            shortcut('190e', '223n', 'end');
+        }
+        end_tree_hole.onclick = function () {
+            shortcut('340e', '150n', 'end');
+        }
+        end_swamp.onclick = function () {
+            shortcut('528w', '332n', 'end');
+        }
+        end_crater.onclick = function () {
+            shortcut('146e', '320s', 'end');
+        }
+        j.onclick = function () {
+            Sx = startX.value;
+            Sy = startY.value;
+            x0 = endX.value;
+            y0 = endY.value;
+            if (!(Sx.indexOf('W') != -1 && Sx.indexOf('w') != -1 && Sx.indexOf('e') != -1 && Sx.indexOf('E') != -1)) {
+                switch (Sx.charAt(Sx.length - 1)) {
+                    case "E":
+                        Sx = Sx.substring(0, Sx.length - 1)
+                        break;
+                    case "e":
+                        Sx = Sx.substring(0, Sx.length - 1)
+                        break;
+                    case "W":
+                        Sx = Sx.substring(0, Sx.length - 1) * -1
+                        break;
+                    case "w":
+                        Sx = Sx.substring(0, Sx.length - 1) * -1
+                        break;
+                    default:
+                }
+            }
+            if (!(Sy.indexOf('N') != -1 && Sy.indexOf('n') != -1 && Sy.indexOf('s') != -1 && Sy.indexOf('S') != -1)) {
+                switch (Sy.charAt(Sy.length - 1)) {
+                    case "N":
+                        Sy = Sy.substring(0, Sy.length - 1)
+                        break;
+                    case "n":
+                        Sy = Sy.substring(0, Sy.length - 1)
+                        break;
+                    case "S":
+                        Sy = Sy.substring(0, Sy.length - 1) * -1
+                        break;
+                    case "s":
+                        Sy = Sy.substring(0, Sy.length - 1) * -1
+                        break;
+                    case "":
+                        alert("请输入正确的数值");
+                        outputDirection.innerHTML = " ";
+                        output_distance.innerHTML = " ";
+                        return;
+                        break;
+                    default:
+                }
+            }
+            if (!(x0.indexOf('W') != -1 && x0.indexOf('w') != -1 && x0.indexOf('e') != -1 && x0.indexOf('E') != -1)) {
+                switch (x0.charAt(x0.length - 1)) {
+                    case "E":
+                        x0 = x0.substring(0, x0.length - 1)
+                        break;
+                    case "e":
+                        x0 = x0.substring(0, x0.length - 1)
+                        break;
+                    case "W":
+                        x0 = x0.substring(0, x0.length - 1) * -1
+                        break;
+                    case "w":
+                        x0 = x0.substring(0, x0.length - 1) * -1
+                        break;
+                    default:
+                }
+            }
+            if (!(y0.indexOf('N') != -1 && y0.indexOf('n') != -1 && y0.indexOf('s') != -1 && y0.indexOf('S') != -1)) {
+                switch (y0.charAt(y0.length - 1)) {
+                    case "N":
+                        y0 = y0.substring(0, y0.length - 1)
+                        break;
+                    case "n":
+                        y0 = y0.substring(0, y0.length - 1)
+                        break;
+                    case "S":
+                        y0 = y0.substring(0, y0.length - 1) * -1
+                        break;
+                    case "s":
+                        y0 = y0.substring(0, y0.length - 1) * -1
+                        break;
+                    case "":
+                        alert("请输入正确的数值");
+                        outputDirection.innerHTML = " ";
+                        output_distance.innerHTML = " ";
+                        return;
+                        break;
+                    default:
+                }
+            }
+            //数学算法
+            let sx = Sx - x0;
+            let sy = Sy - y0;
+            if (sx < 0) {
+                sx = sx * -1;
+            }
+            if (sy < 0) {
+                sy = sy * -1;
+            }
+            //改变内容，使计算结果可视化
+            outputDirection.innerHTML = " ";
+            output_distance.innerHTML = " ";
+            outputDirection.innerHTML = a(sx, sy);
+            output_distance.innerHTML = "距离:" + Math.round(Math.sqrt(sx * sx + sy * sy) * 100) / 100;
+        }
+        $('#menu').hide();
+    </script>
+</body>
+
+</html>

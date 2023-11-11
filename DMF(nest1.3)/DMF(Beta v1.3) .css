@@ -1,0 +1,275 @@
+    * {
+        font-family: Robo-Regular;
+        color: #ffffff;
+    }
+    body {
+        width: 700px;
+        height: 1200px;
+        background-image: url('image/bg.jpg');
+        background-repeat: no-repeat;
+        background-size: 200%;
+        background-position-x: 60%;
+        background-color: black;
+    }
+    #big {
+        overflow: hidden;
+        display: none
+    }
+    .big {
+        display: none;
+        position: fixed;
+    }
+    .div-small {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        width: auto;
+        height: auto;
+        border: 3px solid rgb(226, 116, 37);
+        cursor:none;
+    }
+
+    .small-img {
+        width: auto;
+    }
+
+    .index span {
+        display: block;
+        color: #ffffff;
+        cursor:default;
+    }
+    .Keyborad{
+        cursor:default;
+    }
+    .ten {
+        position: absolute;
+    }
+
+    #y {
+        left: -50%;
+        top: 0px;
+    }
+
+    #x {
+        top: -50%;
+        left: 0px;
+    }
+
+    #big img {
+        position: relative; 
+    }
+
+    li {
+        list-style-type: none;
+        cursor:default;
+    }
+
+    .li {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: rgb(240, 38, 38);
+        border-radius: 50%;
+    }
+
+    .noli {
+        display: none;
+    }
+    .icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: 50%;
+        right: 10px;
+        top:5px;
+        cursor: pointer;
+    }
+    #help {
+        position: absolute;
+        background-image: url('image/help.svg');
+    }
+    #close {
+        width: 25px;
+        right: none;
+        left: 5px;
+        position: relative;
+        background-image: url('image/close.svg');
+    }
+    div #help-index {
+        display: none;
+        position: absolute;
+        cursor: default;
+        width: 50%;
+        height: 50%;
+        background-color: rgba(0, 0, 0, 0.8);
+        left: 25%;
+        top: 15%;
+        text-align: center;
+        z-index: 999;
+    }
+    div #help-index .text {
+        width: 100%;
+        height: 100%;
+        overflow:auto;
+    }
+    div #help-index h5{
+        text-align: left;
+    }
+    div #help-index .furthermore {
+        font-size: 10px;
+        color: rgb(134, 134, 134);
+    }
+    .mask {
+        display: none;
+        position: absolute;
+        top:0px;
+        left: 0px;
+        width: 100rem;
+        height: 100rem;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 998;
+    }
+    .div {
+        color:rgb(255, 255, 255);
+    }
+    form  {
+        color: #ffffff;
+    }
+    .menu {
+        position: relative;
+        margin: 10px 0px;
+        padding: 0;
+        font-size: 18px;
+    }
+    .menu li{
+        display: inline;
+        list-style: none;
+    }
+    .set ul {
+        padding: 0px 0px 0px 20px;
+    }
+    .set li{
+        position: relative;
+        width: 80%;
+        height: 40px;
+        margin: 20px 0px;
+        color: #ffffff;
+    }
+    .set li:hover{
+        background-color: rgba(255, 255, 255, 0.397);
+    }
+    #on::before{
+        position: absolute;
+        width: 101%;
+        height: 110%;
+        right: -5px;
+        top: -4px;
+        content: '';
+        border: 2px white solid;
+        animation: b .5s linear 0s infinite alternate;
+    }
+    .set li span{
+        position: relative;
+        top: 10px;
+        left: 6px;
+    }
+    .set li .left{
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        top: 4px;
+        left: unset;
+        right: 130px;
+        transform-origin: 0% 0%; 
+        transform: rotate(45deg);
+        border-left: 3px solid white;
+        border-bottom: 3px solid white;
+        opacity: 0.7;
+    }
+    .set li .right{
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        top: 4px;
+        left: unset;
+        right: 30px;
+        transform-origin: 0% 0%; 
+        transform: rotate(45deg);
+        border-right: 3px solid white;
+        border-top: 3px solid white;
+        opacity: 0.7;
+    }
+    .set li .text{
+        font-size: 14px;
+        position: absolute;
+        top: 2px;
+        left: unset;
+        right: 96px;
+    }
+    .menu li a {
+        position: relative;
+        padding: 10px 20px;
+        margin: 20px 0px;
+        text-decoration: none;
+        color: #ffffff;
+        transition: .5s;
+    }
+    ul .li1-border {
+        position: absolute;
+        top: -4px;
+        left: 14px;
+        width: 100px;
+        height: 30px;
+        border: 1px white solid;
+        box-shadow: 0px 0px 1px 1px white;
+        animation: a .5s linear 0s infinite alternate;
+    }
+    ul .li2-border {
+        position: absolute;
+        top: -4px;
+        left: 118px;
+        width: 100px;
+        height: 30px;
+        border: 1px white solid;
+        box-shadow: 0px 0px 1px 1px white;
+        animation: a .5s linear 0s infinite alternate;
+    }
+
+    @keyframes a {
+        0%{
+            opacity: 0.9;
+            transform:scale(1.06);
+        }
+        100%{
+            opacity: 0.5;
+            transform:scale(1);
+        }
+    }
+    @keyframes b {
+        0%{
+            opacity: 0.9;
+            transform:scale(1.01,1.1);
+        }
+        100%{
+            opacity: 0.5;
+            transform:scale(1,1);
+        }
+    }
+    @font-face {
+        font-family: Robo-Regular;
+        src: url("Robo-Regular.ttf");
+    }
+    input {
+        border: 0px solid rgb(226, 116, 37);
+        width: 180px;
+        outline: none;
+        background-color: rgb(43, 43, 43);
+        color: white;
+        }
+        button {
+            border: none;
+            background-color: rgb(43, 43, 43);
+            cursor: pointer;
+        }
