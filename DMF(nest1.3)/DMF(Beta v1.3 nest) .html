@@ -8,14 +8,91 @@
     <title>开源龙日导航程序DMF</title>
     <link rel="stylesheet" href="DMF(Beta v1.3) .css">
     <script src="jquery.min.js"></script>
+    <script src="clipboard.min.js"></script>
 </head>
+
 <body>
     <div class="header-menu">
         <ul class="menu">
             <div></div>
             <li class="menu-1" id="1"><a href="#">计算界面</a></li>
             <li class="menu-2" id="2"><a href="#">设置</a></li>
+            <li class="menu-3" id="3"><a href="#">遗传预测</a></li>
         </ul>
+    </div>
+    <span id="tip"></span>
+    <div class="pa">
+        <h6 style="color: rgba(192, 200, 207, 0.836);">按i查看预测结果</h6>
+        <h6>另：因为某些不可名状之bug，综合评分会被当成普通属性计算，要劳烦各位自己修改，抱歉</h6>
+        <div id="perant_inf">
+            <div id="father">
+                <h4>父亲</h4>
+                <li>预期寿命<input type="text" value="B/d+" /></li>
+                <li>鳞片厚度<input type="text" value="B/d+" /></li>
+                <li>耐力<input type="text" value="B/d+" /></li>
+                <li>吐息充能<input type="text" value="B/d+" /></li>
+                <li>吐息伤害<input type="text" value="B/d+" /></li>
+                <li>能量<input type="text" value="B/d+" /></li>
+                <li>力量<input type="text" value="B/d+" /></li>
+                <li>养分吸收<input type="text" value="B/d+" /></li>
+                <li>耐渴能力<input type="text" value="B/d+" /></li>
+                <li>毒素抗性<input type="text" value="B/d+" /></li>
+                <li>冲击抗性<input type="text" value="B/d+" /></li>
+                <li>穿刺抗性<input type="text" value="B/d+" /></li>
+                <li>火焰抗性<input type="text" value="B/d+" /></li>
+                <li>冰霜抗性<input type="text" value="B/d+" /></li>
+                <li>等离子抗性<input type="text" value="B/d+" /></li>
+                <li>闪电抗性<input type="text" value="B/d+" /></li>
+                <li>酸液抗性<input type="text" value="B/d+" /></li>
+                <li>毒液抗性<input type="text" value="B/d+" /></li>
+                <li>综合评分<input type="text" value="B/d+" /></li>
+            </div>
+            <div id="mother">
+                <h4>母亲</h4>
+                <li>预期寿命<input type="text" value="B/d+" /></li>
+                <li>鳞片厚度<input type="text" value="B/d+" /></li>
+                <li>耐力<input type="text" value="B/d+" /></li>
+                <li>吐息充能<input type="text" value="B/d+" /></li>
+                <li>吐息伤害<input type="text" value="B/d+" /></li>
+                <li>能量<input type="text" value="B/d+" /></li>
+                <li>力量<input type="text" value="B/d+" /></li>
+                <li>养分吸收<input type="text" value="B/d+" /></li>
+                <li>耐渴能力<input type="text" value="B/d+" /></li>
+                <li>毒素抗性<input type="text" value="B/d+" /></li>
+                <li>冲击抗性<input type="text" value="B/d+" /></li>
+                <li>穿刺抗性<input type="text" value="B/d+" /></li>
+                <li>火焰抗性<input type="text" value="B/d+" /></li>
+                <li>冰霜抗性<input type="text" value="B/d+" /></li>
+                <li>等离子抗性<input type="text" value="B/d+" /></li>
+                <li>闪电抗性<input type="text" value="B/d+" /></li>
+                <li>酸液抗性<input type="text" value="B/d+" /></li>
+                <li>毒液抗性<input type="text" value="B/d+" /></li>
+                <li>综合评分<input type="text" value="B/d+" /></li>
+            </div>
+        </div>
+        <div id="son">
+            子代：
+            <li>预期寿命<input type="text" value="" /></li>
+            <li>鳞片厚度<input type="text" value="" /></li>
+            <li>耐力<input type="text" value="" /></li>
+            <li>吐息充能<input type="text" value="" /></li>
+            <li>吐息伤害<input type="text" value="" /></li>
+            <li>能量<input type="text" value="" /></li>
+            <li>力量<input type="text" value="" /></li>
+            <li>养分吸收<input type="text" value="" /></li>
+            <li>耐渴能力<input type="text" value="" /></li>
+            <li>毒素抗性<input type="text" value="" /></li>
+            <li>冲击抗性<input type="text" value="" /></li>
+            <li>穿刺抗性<input type="text" value="" /></li>
+            <li>火焰抗性<input type="text" value="" /></li>
+            <li>冰霜抗性<input type="text" value="" /></li>
+            <li>等离子抗性<input type="text" value="" /></li>
+            <li>闪电抗性<input type="text" value="" /></li>
+            <li>酸液抗性<input type="text" value="" /></li>
+            <li>毒液抗性<input type="text" value="" /></li>
+            <li>综合评分<input type="text" value="" /></li>
+        </div>
+        <button class="cuateing">计算</button>
     </div>
     <div class="index">
         <li id="help" class="icon"></li>
@@ -28,11 +105,14 @@
                     <p>手动输入：在输入框输入对应的坐标，支持带经纬度格式（游戏中按i查看经纬度）和坐标轴格式</p>
                     <p>快捷计算：点击按钮，自动输入对应地点的经纬度</p>
                     <p>结果查看：输入完坐标后点击“计算”，页面底部会出现两条信息，第一行是前进方向（游戏中按“esc”，设置->游戏->开启静态罗盘，即可让方向始终显示在游戏顶部），另一行是前进距离</p>
+                    <p>自动复制：将计算结果自动复制到剪贴板</p>
+                    <p>遗传预测：输入父母的属性预测子代属性，目前仅支持非长老。结果以X/X的形式呈现时可能是其中任意一个属性，同时支持用“X/X”和“X/X/X”等方式输入。输入不符合正常数据或A+、A++数据时无法正常计算
+                    </p>
                     <p>设置：控制对应功能是否开启</p>
                     <p class="furthermore">程序开发：@Kerrrod。有bug或瑕疵欢迎反馈（虽然这个界面就有小瑕疵XD)QQ:2721391079</p>
                     <p class="furthermore">特别鸣谢：@Hati @Slientdragon</p>
                     <p class="furthermore">本作品未经授权禁止用于一切商业行为 地图所有权归@Hati所有</p>
-                </h1>
+                    </h1>
             </div>
         </div>
         <div class="mask"></div>
@@ -53,7 +133,7 @@
             <p><input class="end-y" placeholder="请输入目的地的Y坐标(带经纬)"></p>
         </div>
         <div>
-            <button class="calculating">计算</button>
+            <button class="calculating" data-clipboard-target="#text">计算</button>
         </div>
         <div class="Keyborad">
             <div class="start">
@@ -81,18 +161,12 @@
                 <button class="end-crater">陨石坑</button>
             </div>
         </div>
-        <span class="Direction"></span>
-        <span class="distance"></span>
+        <span class="Direction" id="Direction"></span>
+        <span class="distance" id="distance"></span>
+        <textarea id="text"></textarea>
     </div>
     <div class="set">
-        <ul>
-            <li id="Img"><span class="img-set">图片</span><span class="left"></span><span class="text">开</span><span
-                    class="right"></span></li>
-            <li id="Keyboard"><span class="keyboard-set">快捷键</span><span class="left"></span><span
-                    class="text">开</span><span class="right"></span></li>
-            <li id="Num"><span class="num-set">手动输入</span><span class="left"></span><span class="text">开</span><span
-                    class="right"></span></li>
-        </ul>
+        <ul></ul>
         <form>
             <button class="useset">运用</button>
         </form>
@@ -102,7 +176,6 @@
         function a(a, b) {
             let Direction;
             Direction = Math.atan(b / a) * 180 / Math.PI;
-            console.log(Sx, x0);
             if (Sx - x0 > 0) {
                 if (Sy - y0 > 0) {
                     Direction = "W偏S:" + Math.round(Direction * 100) / 100 + '度' + '\n';
@@ -118,13 +191,29 @@
             }
             return (Direction);
         }
+        function Tip(msg) {
+            tip.text("");
+            tip.text(msg);
+            for (let i = 0; i <= 1; i++) {
+                setTimeout(() => {
+                    tip.fadeToggle(600);
+                });
+            }
+        }
         let x0;
         let y0;
         let Sy;
         let Sx;
-        let set = false;
+        let tip = $("#tip");
+        let index = [true, false, false];
         const img_size = 4;
-        let set_Option = [true, true, true];//img,keyborad,num
+        let set_Option = [true, true, true, true];//img,keyborad,num,auto-copy
+        var clipboard = new ClipboardJS('.calculating');
+        let set_option = {
+            Text: ["图片", "快捷键", "手动输入", "自动复制"],
+            Idname: ["Img", "Keyboard", "Num", "Auto-copy"],
+            Classname: ["img-set", "keyboard-set", "num-set", "auto-copy"],
+        }//设置中各个选项的class，text，id
         // 获取元素
         let div = document.querySelector('.div');
         let big_img = document.querySelector('#big').querySelector('img');
@@ -164,6 +253,22 @@
         let zhuangtai = 0;
         $('ul div').attr('class', 'li1-border');
         $('.set').hide();
+        for (let i = 0; i <= set_Option.length - 1; i++) {
+            $('.set ul').append("<li id=\"" + set_option.Idname[i] + "\"><span class=\"" + set_option.Classname[i] + "\">" + set_option.Text[i] + "<\/span><span class=\"left\"><\/span><span class=\"text\">开<\/span><span class=\"right\"><\/span><\/li>");
+        }
+        set_option = null;
+        document.addEventListener("keyup", e => {
+            if (e.keyCode == 13 && $('.index').css('display') != "none") {
+                j.onclick();
+            }
+            if (e.keyCode == 13 && $('.pa').css('display') != "none") {
+                $(".pa .cuateing").click();
+            }
+            if (e.keyCode == 73 && $('.pa').css('display') != "none") {
+                $(".pa #perant_inf").toggle();
+                $(".pa #son").toggle();
+            }
+        })
         div_small.addEventListener('mousemove', function (e) {
             x = e.pageX;
             y = e.pageY;
@@ -184,6 +289,9 @@
             }
 
         })
+        $('ul li:eq(2)').hover(function () {//少一個css的li3-border
+            $('ul div').attr('class', 'li3-border');
+        })
         $('ul li:eq(1)').hover(function () {
             $('ul div').attr('class', 'li2-border');
         })
@@ -195,19 +303,18 @@
             set_Option[0] ? $('.Img').show() : $('.Img').hide();
             set_Option[1] ? $('.Keyborad').show() : $('.Keyborad').hide();
             set_Option[2] ? $('.div').show() : $('.div').hide();
-            console.log(set_Option);
+            Tip("设置成功");
         })
         for (let i = 0; i < $('.set ul li').length; i++) {
             $('.set ul li').eq(i).click(function () {
                 let li = $('.set ul li').eq(i);
                 set_Option[i] = !set_Option[i];
-                console.log(li.children(1).eq(1).css('opacity'));
                 if (set_Option[i]) {
                     li.children(1).eq(1).css('opacity', 0.7);
                     li.children(1).eq(3).css('opacity', 0.3);
                 } else {
                     li.children(1).eq(3).css('opacity', 0.7);
-                    li.children(1).eq(1).css('opacity', 0.3);
+                    li.children(1).eq(1).css('opacity', 0.25);
                 }
                 set_Option[i] ? li[0].children[2].innerHTML = '开' : li[0].children[2].innerHTML = '关';
             })
@@ -241,10 +348,9 @@
                 let img_dian1 = have_li()();
                 a = img_dian1.parentNode.style.width.substring(0, img_dian1.parentNode.style.width.length - 2);//div_small.width
                 Sx = Math.round((e.pageX - a / 2 - img_dian1.parentNode.offsetLeft) * 3.49);
-                console.log(Sx);
                 img_dian1.style.left = e.pageX - img_dian1.parentNode.offsetLeft - 3 + "px";
                 a = img_dian1.parentNode.style.height.substring(0, img_dian1.parentNode.style.height.length - 2);
-                Sy = Math.round((a - e.pageY + img_dian1.parentNode.offsetTop - a / 2) * 3.49);
+                Sy = Math.round((a / 2 - e.pageY + img_dian1.parentNode.offsetTop) * 3.49);//Math.round((a - e.pageY + img_dian1.parentNode.offsetTop - a / 2) * 3.49)
                 img_dian1.style.top = e.pageY - img_dian1.parentNode.offsetTop - 3 + "px";
                 zhuangtai = 1;
             } else if (zhuangtai == 1) {
@@ -272,7 +378,7 @@
                 a = img_dian2.parentNode.style.width.substring(0, img_dian2.parentNode.style.width.length - 2);//div_small.width
                 x0 = Math.round((e.pageX - a / 2 - img_dian2.parentNode.offsetLeft) * 3.49);
                 a = img_dian2.parentNode.style.height.substring(0, img_dian2.parentNode.style.height.length - 2);//div_small.width
-                y0 = Math.round((a - e.pageY + img_dian2.parentNode.offsetTop - a / 2) * 3.49);
+                y0 = Math.round((a / 2 - e.pageY + img_dian2.parentNode.offsetTop) * 3.49);//Math.round((a - e.pageY + img_dian2.parentNode.offsetTop - a / 2) * 3.49)
                 img_dian2.style.left = e.pageX - img_dian2.parentNode.offsetLeft - 3 + "px";
                 img_dian2.style.top = e.pageY - img_dian2.parentNode.offsetTop - 3 + "px";
                 zhuangtai = -1;
@@ -288,32 +394,39 @@
             endY.value = y0;
             endX.value = x0;
         })
-        $('#help').click(function(){
+        $('#help').click(function () {
             $('#help-index').show();
             $('.mask').show();
         })
-        $('#close').click(function(){
+        $('#close').click(function () {
             $('#help-index').hide();
             $('.mask').hide();
         })
+        $('.menu-3').click(function (e) {
+            e.preventDefault();
+            if (!index[2]) {
+                $('body').children().hide();
+                $('.header-menu').show();
+                $('.pa').show();
+                index = [false, false, true];
+            }
+        })
         $('.menu-2').click(function (e) {
             e.preventDefault();
-            if (!set) {
+            if (!index[1]) {
                 $('body').children().hide();
-                $('div').eq(0).show();
-                $('div:last').show();
-                set = !set;
+                $('.header-menu').show();
+                $('.set').show();
+                index = [false, true, false];
             }
         })
         $('.menu-1').click(function (e) {
             e.preventDefault();
-            if (set) {
+            if (!index[0]) {
                 $('body').children().hide();
-                $('div').eq(0).show();
-                $('body').children(1).show();
-                console.log($('body').children(1));
-                $('div:last').hide();
-                set = !set;
+                $('.header-menu').show();
+                $('.index').show();
+                index = [true, false, false];
             }
         })
         //按键快捷输入坐标
@@ -384,7 +497,7 @@
         end_crater.onclick = function () {
             shortcut('146e', '320s', 'end');
         }
-        j.onclick = function () {
+        j.onclick = function calculating() {
             Sx = startX.value;
             Sy = startY.value;
             x0 = endX.value;
@@ -421,7 +534,7 @@
                         Sy = Sy.substring(0, Sy.length - 1) * -1
                         break;
                     case "":
-                        alert("请输入正确的数值");
+                        Tip("请输入正确的数值");
                         outputDirection.innerHTML = " ";
                         output_distance.innerHTML = " ";
                         return;
@@ -461,7 +574,7 @@
                         y0 = y0.substring(0, y0.length - 1) * -1
                         break;
                     case "":
-                        alert("请输入正确的数值");
+                        Tip("请输入正确的数值");
                         outputDirection.innerHTML = " ";
                         output_distance.innerHTML = " ";
                         return;
@@ -483,8 +596,261 @@
             output_distance.innerHTML = " ";
             outputDirection.innerHTML = a(sx, sy);
             output_distance.innerHTML = "距离:" + Math.round(Math.sqrt(sx * sx + sy * sy) * 100) / 100;
+            if (set_Option[3]) {
+                let Direction = outputDirection.innerText;
+                let distance = output_distance.innerText;
+                let copy = document.getElementById("text");
+                copy.value = Direction + ' ' + distance;
+                try {
+                    navigator.clipboard.writeText(copy.value).then(
+                        function () {
+                            Tip("已将计算结果复制至剪贴板");
+                            return;
+                        },
+                        function () {
+
+                        });
+                } catch (error) {
+                    clipboard.on("success", e => {
+                        Tip("已将计算结果复制至剪贴板");
+                        return;
+                    });
+                    clipboard.on("error", e => {
+                        Tip("复制失败，您的浏览器不支持该功能，请切换浏览器以使用");
+                        return;
+                    });
+                }
+            }
         }
+        $('.pa').hide();
         $('#menu').hide();
+        $(".pa .cuateing").click(function () {
+            function capr_Obj(arr, num) {
+                let copyarr = arr;
+                for (let b = 0; b <= arr.length - 1; b++) {
+                    var diffrent = false;
+                    if (f1[f1.length - 1] == 12 && f2[f2.length - 1] == 12) {
+                        arr[b] == num ? copyarr[b] += 1 : diffrent = true;
+                    } else {//此处假设父代中有一个综合不到A则继承较好的那个
+                        if (arr[b] < num) {
+                            copyarr[b] = num;
+                        }
+                    }
+                    diffrent ? copyarr.push(num) : 1;
+                }
+                return copyarr;
+            }
+            let f1 = [], f2 = [], son = [];
+            for (let i = 0; i <= 18; i++) {
+                f1.push($(".pa #perant_inf #father li").children().eq(i).val());
+                f2.push($(".pa #perant_inf #mother li").children().eq(i).val());
+            }
+            function Check(arr) {
+                for (let j = 0; j <= arr.length - 2; j++) {
+                    for (let i = j + 1; i <= arr.length - 1;) {
+                        if (arr[j] == arr[i]) {
+                            for (let ii = i; ii <= arr.length - 1; ii++) {
+                                arr[ii] = arr[ii + 1];
+                            }
+                            arr.pop();
+                        } else {
+                            i++;
+                        }
+                    }
+                }
+                return arr;
+            }
+            function big_acsii(f1) {
+                for (let a = 0; a <= f1.length - 1; a++) {
+                    f1[a].toString();
+                    if (f1[a].includes('/')) {
+                        let arr = [];
+                        while (f1[a].includes('/')) {
+                            arr.push(f1[a].substring(0, f1[a].indexOf('/')));
+                            f1[a] = f1[a].substring(f1[a].indexOf('/') + 1);
+                        }
+                        arr.push(f1[a]);
+                        for (let b = 0; b <= arr.length - 1; b++) {
+                            arr[b] = acsii(arr[b]);
+                        }
+                        f1[a] = arr;
+                    } else {
+                        f1[a] = acsii(f1[a]);
+                    }
+                }
+            }
+            big_acsii(f1);
+            big_acsii(f2);
+            for (let a = 0; a <= f1.length - 1; a++) {
+                if (typeof f1[a] == "object" && typeof f2[a] == "object") {
+                    let copyf2 = f2[a];
+                    for (let b = 0; b <= f1[a].length - 1; b++) {
+                        var diffrent = false;
+                        for (let c = 0; c <= f2[a].length - 1; c++) {
+                            if (f1[f1.length - 1] == 12 && f2[f2.length - 1] == 12) {
+                                f1[a][b] == f2[a][c] ? copyf2[c] += 1 : diffrent = true;
+
+                            } else {
+                                if (f1[a][b] >= f2[a][c]) {
+                                    copyf2[c] = f1[a][b];
+                                } else if (f1[a][b] <= f2[a][c]) {
+                                    copyf2[c] = f2[a][c];
+                                }
+                            }
+                        }
+                        diffrent ? copyf2.push(f1[a][b]) : 1;
+                    }
+                    son[a] = Check(copyf2);
+                } else if (typeof f1[a] == "object") {
+                    son[a] = Check(capr_Obj(f1[a], f2[a]));
+                } else if (typeof f2[a] == "object") {
+                    son[a] = Check(capr_Obj(f2[a], f1[a]));
+                } else {
+                    let copyarr = f1[a];
+                    var diffrent = false;
+                    if (f1[f1.length - 1] == 12 && f2[f2.length - 1] == 12) {
+                        f1[a] == f2[a] ? copyarr += 1 : diffrent = true;
+                    } else {
+                        if (f1[a] < f2[a]) {
+                            copyarr = f2[a];
+                        }
+                    } diffrent ? copyarr.push(f2[a]) : 1;
+                    son[a] = Check(copyarr);
+                }
+            }
+
+            for (let a = 0; a <= son.length - 1; a++) {
+                if (typeof son[a] == "object") {
+                    for (let b = 0; b <= son[a].length - 1; b++) {
+                        for (let i = 0; i <= son[a].length - 1; i++) {
+                        son[a][b] > 12 ? son[a][b] = 12 : 1;
+                    }
+                        son[a][b] = iisca(son[a][b]);
+                    }
+                } else {
+                    for (let i = 0; i <= son.length - 1; i++) {
+                        son[a] > 12 ? son[a] = 12 : 1;
+                    }
+                    son[a] = iisca(son[a]);
+                }
+            }
+
+            for (let i = 0; i <= $(".pa #son").children().length - 1; i++) {
+                if (typeof son[i] == "object") {
+                    $(".pa #son input").eq(i).val("");
+                    $(".pa #son input").eq(i).val(son[i].join("/"));
+                } else {
+                    $(".pa #son input").eq(i).val("");
+                    $(".pa #son input").eq(i).val(son[i]);
+                }
+            }
+            if (set_Option[3]) {
+                let copy = "";
+                for (let i = 0; i <= son.length - 1; i++) {
+                    copy += son[i] + " ";
+                }
+                try {
+                    navigator.clipboard.writeText(copy).then(
+                        function () {
+                            Tip("已将计算结果复制至剪贴板");
+                            return;
+                        },
+                        function () {
+                        });
+                } catch (error) {
+                    clipboard.on("success", e => {
+                        Tip("已将计算结果复制至剪贴板");
+                        return;
+                    });
+                    clipboard.on("error", e => {
+                        Tip("复制失败，您的浏览器不支持该功能，请切换浏览器以使用");
+                        return;
+                    });
+                }
+            }
+        })
+        function acsii(f1) {
+            switch (f1) {
+                case "E":
+                    return 1;
+                case "D-":
+                    return 2;
+                case "D":
+                    return 3;
+                case "D+":
+                    return 4;
+                case "C-":
+                    return 5;
+                case "C":
+                    return 6;
+                case "C+":
+                    return 7;
+                case "B-":
+                    return 8;
+                case "B":
+                    return 9;
+                case "B+":
+                    return 10;
+                case "A-":
+                    return 11;
+                case "A":
+                    return 12;
+                case "e":
+                    return 1;
+                case "d-":
+                    return 2;
+                case "d":
+                    return 3;
+                case "d+":
+                    return 4;
+                case "c-":
+                    return 5;
+                case "c":
+                    return 6;
+                case "c+":
+                    return 7;
+                case "b-":
+                    return 8;
+                case "b":
+                    return 9;
+                case "b+":
+                    return 10;
+                case "a-":
+                    return 11;
+                case "a":
+                    return 12;
+                default:
+            }
+        }
+        function iisca(f1) {
+            switch (f1) {
+                case 1:
+                    return "E";
+                case 2:
+                    return "D-";
+                case 3:
+                    return "D";
+                case 4:
+                    return "D+";
+                case 5:
+                    return "C-";
+                case 6:
+                    return "C";
+                case 7:
+                    return "C+";
+                case 8:
+                    return "B-";
+                case 9:
+                    return "B";
+                case 10:
+                    return "B+";
+                case 11:
+                    return "A-";
+                case 12:
+                    return "A";
+                default:
+            }
+        }
     </script>
 </body>
 
