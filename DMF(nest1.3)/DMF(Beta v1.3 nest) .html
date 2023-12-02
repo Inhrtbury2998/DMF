@@ -714,7 +714,11 @@
                         if (f1[a] < f2[a]) {
                             copyarr = f2[a];
                         }
-                    } diffrent ? copyarr.push(f2[a]) : 1;
+                    }console.log(copyarr); 
+                    if(diffrent){
+                        copyarr= [copyarr];
+                        copyarr.push(f2[a]);
+                    }
                     son[a] = Check(copyarr);
                 }
             }
