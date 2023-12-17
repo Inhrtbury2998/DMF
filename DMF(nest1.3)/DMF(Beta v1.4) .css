@@ -11,6 +11,30 @@
         background-position-x: 60%;
         background-color: black;
     }
+    
+    li {
+        list-style-type: none;
+        cursor:default;
+    }
+    form  {
+        color: #ffffff;
+    }
+    input {
+        border: 0px solid rgb(210, 144, 6);
+        width: 180px;
+        outline: none;
+        background-color: rgb(43, 43, 43);
+        color: white;
+        }
+        button {
+            border: none;
+            background-color: rgb(43, 43, 43);
+            cursor: pointer;
+        }
+    textarea {
+        opacity: 0;
+        z-index: -1;
+    }
     #big {
         overflow: hidden;
         display: none
@@ -25,7 +49,7 @@
         overflow: hidden;
         width: auto;
         height: auto;
-        border: 3px solid rgb(226, 116, 37);
+        border: 3px solid rgb(210, 144, 6);
         cursor:none;
     }
 
@@ -58,12 +82,6 @@
     #big img {
         position: relative; 
     }
-
-    li {
-        list-style-type: none;
-        cursor:default;
-    }
-
     .li {
         position: absolute;
         width: 6px;
@@ -142,9 +160,7 @@
     .div {
         color:rgb(255, 255, 255);
     }
-    form  {
-        color: #ffffff;
-    }
+
     .menu {
         position: relative;
         margin: 10px 0px;
@@ -155,24 +171,145 @@
         background-color: rgb(43, 43, 43);
     }
     .pa input {
+        color: rgb(210, 144, 6);
         font-size: 20px;
-        color: darkorange;
     }
-    .pa #father,.pa #son {
+    .pa p {
+        margin: 0px;
+    }
+    .pa h6 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .pa #father {
         display: inline-block;
-        left: 10px;
-        width: 150px;
+        margin: 0px 20px;
+        width: 100px;
+    }
+    .pa #son {
+        margin: 0px 20px;
+        background-image: url("image/son_bg.PNG");
+        background-repeat: no-repeat;
+        background-position: 2%;
+    }
+    /* - Chrome ≤56,
+   - Safari 5-10.0
+   - iOS Safari 4.2-10.2
+   - Opera 15-43
+   - Opera Mobile >12
+   - Android Browser 2.1-4.4.4
+   - Samsung Internet
+   - UC Browser for Android
+   - QQ Browser */
+    .pa #perant_inf input::-webkit-input-placeholder {
+        font-size: 14px;
+    }
+    /* Firefox 4-18 */
+    .pa #perant_inf input:-moz-placeholder {
+        font-size: 14px;
+    }
+    
+    /* Firefox 19-50 */
+    .pa #perant_inf input::-moz-placeholder {
+        font-size: 14px;
+    }
+    
+    /* - Internet Explorer 10–11
+       - Internet Explorer Mobile 10-11 */
+    .pa #perant_inf input:-ms-input-placeholder {
+        font-size: 14px !important;
+    }
+    
+    /* Edge (also supports ::-webkit-input-placeholder) */
+    .pa #perant_inf input::-ms-input-placeholder {
+        font-size: 14px;
+    }
+    
+    /* CSS Working Draft */
+    .pa #perant_inf input::placeholder {
+        font-size: 14px;
+    }
+
+    .pa #father_text ,.pa #mother_text {
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .pa #mother_text{
+        margin-left: 170px;
+    }
+    .pa .son_text {
+        display: inline-block;
+        width: 5em;
+        padding-right: 80px;
+    }
+    .pa #father_text li,.pa #mother_text li {
+        display: block;
+        font-size: 14px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 5em;
+    }
+    .pa .son_text li {
+        display: block;
+        font-size: 16px;
+        padding-top: 13px;
+        padding-bottom: 15px;
+        width: 5em;
+        color: rgb(216, 216, 216);
+    }
+    .pa #son_val_left li, .pa #son_val_right li{
+        display: block;
+        padding-top: 10px;
+        padding-bottom: 11px;
+    }
+    .pa .son_text,.pa .son_val {
+        display: inline-block;
+    }
+    .pa .son_val input {
+        font-weight: 600;
+        width: 7em;
+        background-color: rgba(0, 0, 0, .0);
+    }
+    .pa #son_right {
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .pa #son_left {
+        display: inline-block;
+        margin-left: 5px;
+    }
+    .pa #son h2 {
+        margin: 5px;
+        color: rgb(210, 144, 6);
+        font-weight: 450;
+        
     }
     .pa #mother {
         display: inline-block;
-        right:10px;
-        width: 150px;
+        margin: 0px 20px;
+        width: 100px;
     }
     .pa li {
         display: inline;
     }
     .pa #son {
         display: none;
+    }
+    .pa #son #bloodline_quality, .pa #son #bloodline_quality input{
+        font-size: 34px;
+        font-weight: 550;
+    }
+    .pa #son #bloodline_quality #bloodline_quality_val {
+        padding-left: 300px;
+    }
+    .pa #son #bloodline_quality input {
+        background-color: rgba(0, 0, 0, .0);
+    }
+    .pa .min{
+        display: block;
+        background-color:rgb(20, 20, 20);
+        margin: 10px;
+        width: 25em;
     }
     .menu li{
         display: inline;
@@ -311,19 +448,4 @@
         font-family: Robo-Regular;
         src: url("Robo-Regular.ttf");
     }
-    input {
-        border: 0px solid rgb(226, 116, 37);
-        width: 180px;
-        outline: none;
-        background-color: rgb(43, 43, 43);
-        color: white;
-        }
-        button {
-            border: none;
-            background-color: rgb(43, 43, 43);
-            cursor: pointer;
-        }
-    textarea {
-        opacity: 0;
-        z-index: -1;
-    }
+
