@@ -746,12 +746,10 @@
                 }
             }
             if (f1.length != 19) {
-                console.log(f1);
                 Tip("父方的数据填写有误");
                 return;
             }
             if (f2.length != 19) {
-                console.log(f2);
                 Tip("母方的数据填写有误");
                 return;
             }
@@ -824,7 +822,7 @@
                         if (f1[a] < f2[a]) {
                             copyarr = f2[a];
                         }
-                    } console.log(copyarr);
+                    }
                     if (diffrent) {
                         copyarr = [copyarr];
                         copyarr.push(f2[a]);
@@ -848,7 +846,7 @@
                     son[a] = iisca(son[a]);
                 }
             }
-
+            console.log(son);
             for (let i = 0; i <= 8; i++) {
                 if (typeof son[i] == "object") {
                     $(".pa #son_left input").eq(i).val("");
@@ -859,12 +857,13 @@
                 }
             }
             for (let i = 0; i <= 8; i++) {
-                if (typeof son[i] == "object") {
+                if (typeof son[i+8] == "object") {
+                    console.log(son[i+8]);
                     $(".pa #son_right input").eq(i).val("");
-                    $(".pa #son_right input").eq(i).val(son[i].join("/"));
+                    $(".pa #son_right input").eq(i).val(son[i+8].join("/"));
                 } else {
                     $(".pa #son_right input").eq(i).val("");
-                    $(".pa #son_right input").eq(i).val(son[i]);
+                    $(".pa #son_right input").eq(i).val(son[i+8]);
                 }
             }
             if (typeof son[18] == "object") {
