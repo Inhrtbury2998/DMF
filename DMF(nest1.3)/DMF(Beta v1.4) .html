@@ -25,72 +25,151 @@
         <h6 style="color: rgba(192, 200, 207, 0.836);">按i查看预测结果</h6>
         <h6>另：因为某些不可名状之bug，综合评分会被当成普通属性计算，要劳烦各位自己修改，抱歉</h6>
         <div id="perant_inf">
-            <div id="father">
+            <p>快速填入数据(当均填入数据时以快速填入区域数据为准，支持仅一方填入数据)</p>
+            <input class="min" id="father_min_inf" placeholder="请输入父亲的属性，用空格隔开(或直接粘贴计算结果)">
+            <input class="min" id="mother_min_inf" placeholder="请输入母亲的属性，用空格隔开(或直接粘贴计算结果)">
+            <div id="father_text">
                 <h4>父亲</h4>
-                <li>预期寿命<input type="text" value="B/d+" /></li>
-                <li>鳞片厚度<input type="text" value="B/d+" /></li>
-                <li>耐力<input type="text" value="B/d+" /></li>
-                <li>吐息充能<input type="text" value="B/d+" /></li>
-                <li>吐息伤害<input type="text" value="B/d+" /></li>
-                <li>能量<input type="text" value="B/d+" /></li>
-                <li>力量<input type="text" value="B/d+" /></li>
-                <li>养分吸收<input type="text" value="B/d+" /></li>
-                <li>耐渴能力<input type="text" value="B/d+" /></li>
-                <li>毒素抗性<input type="text" value="B/d+" /></li>
-                <li>冲击抗性<input type="text" value="B/d+" /></li>
-                <li>穿刺抗性<input type="text" value="B/d+" /></li>
-                <li>火焰抗性<input type="text" value="B/d+" /></li>
-                <li>冰霜抗性<input type="text" value="B/d+" /></li>
-                <li>等离子抗性<input type="text" value="B/d+" /></li>
-                <li>闪电抗性<input type="text" value="B/d+" /></li>
-                <li>酸液抗性<input type="text" value="B/d+" /></li>
-                <li>毒液抗性<input type="text" value="B/d+" /></li>
-                <li>综合评分<input type="text" value="B/d+" /></li>
+                <li>预期寿命</li>
+                <li>鳞片厚度</li>
+                <li>耐力</li>
+                <li>吐息充能</li>
+                <li>吐息伤害</li>
+                <li>能量</li>
+                <li>力量</li>
+                <li>养分吸收</li>
+                <li>耐渴能力</li>
+                <li>毒素抗性</li>
+                <li>冲击抗性</li>
+                <li>穿刺抗性</li>
+                <li>火焰抗性</li>
+                <li>冰霜抗性</li>
+                <li>等离子抗性</li>
+                <li>闪电抗性</li>
+                <li>酸液抗性</li>
+                <li>毒液抗性</li>
+                <li>综合评分</li>
+            </div>
+            <div id="father">
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+            </div>
+            <div id="mother_text">
+                <h4>母亲</h4>
+                <li>预期寿命</li>
+                <li>鳞片厚度</li>
+                <li>耐力</li>
+                <li>吐息充能</li>
+                <li>吐息伤害</li>
+                <li>能量</li>
+                <li>力量</li>
+                <li>养分吸收</li>
+                <li>耐渴能力</li>
+                <li>毒素抗性</li>
+                <li>冲击抗性</li>
+                <li>穿刺抗性</li>
+                <li>火焰抗性</li>
+                <li>冰霜抗性</li>
+                <li>等离子抗性</li>
+                <li>闪电抗性</li>
+                <li>酸液抗性</li>
+                <li>毒液抗性</li>
+                <li>综合评分</li>
             </div>
             <div id="mother">
-                <h4>母亲</h4>
-                <li>预期寿命<input type="text" value="B/d+" /></li>
-                <li>鳞片厚度<input type="text" value="B/d+" /></li>
-                <li>耐力<input type="text" value="B/d+" /></li>
-                <li>吐息充能<input type="text" value="B/d+" /></li>
-                <li>吐息伤害<input type="text" value="B/d+" /></li>
-                <li>能量<input type="text" value="B/d+" /></li>
-                <li>力量<input type="text" value="B/d+" /></li>
-                <li>养分吸收<input type="text" value="B/d+" /></li>
-                <li>耐渴能力<input type="text" value="B/d+" /></li>
-                <li>毒素抗性<input type="text" value="B/d+" /></li>
-                <li>冲击抗性<input type="text" value="B/d+" /></li>
-                <li>穿刺抗性<input type="text" value="B/d+" /></li>
-                <li>火焰抗性<input type="text" value="B/d+" /></li>
-                <li>冰霜抗性<input type="text" value="B/d+" /></li>
-                <li>等离子抗性<input type="text" value="B/d+" /></li>
-                <li>闪电抗性<input type="text" value="B/d+" /></li>
-                <li>酸液抗性<input type="text" value="B/d+" /></li>
-                <li>毒液抗性<input type="text" value="B/d+" /></li>
-                <li>综合评分<input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B/d+" /></li>
             </div>
         </div>
         <div id="son">
-            子代：
-            <li>预期寿命<input type="text" value="" /></li>
-            <li>鳞片厚度<input type="text" value="" /></li>
-            <li>耐力<input type="text" value="" /></li>
-            <li>吐息充能<input type="text" value="" /></li>
-            <li>吐息伤害<input type="text" value="" /></li>
-            <li>能量<input type="text" value="" /></li>
-            <li>力量<input type="text" value="" /></li>
-            <li>养分吸收<input type="text" value="" /></li>
-            <li>耐渴能力<input type="text" value="" /></li>
-            <li>毒素抗性<input type="text" value="" /></li>
-            <li>冲击抗性<input type="text" value="" /></li>
-            <li>穿刺抗性<input type="text" value="" /></li>
-            <li>火焰抗性<input type="text" value="" /></li>
-            <li>冰霜抗性<input type="text" value="" /></li>
-            <li>等离子抗性<input type="text" value="" /></li>
-            <li>闪电抗性<input type="text" value="" /></li>
-            <li>酸液抗性<input type="text" value="" /></li>
-            <li>毒液抗性<input type="text" value="" /></li>
-            <li>综合评分<input type="text" value="" /></li>
+            <h4>子代</h4>
+            <h2>基因</h2>
+            <span id="son_left">
+                <span id="son_text_left" class="son_text">
+                    <li>预期寿命</li>
+                    <li>鳞片厚度</li>
+                    <li>耐力</li>
+                    <li>吐息充能</li>
+                    <li>吐息伤害</li>
+                    <li>能量</li>
+                    <li>力量</li>
+                    <li>养分吸收</li>
+                    <li>耐渴能力</li>
+                </span>
+                <span id="son_val_left" class="son_val">
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                </span>
+            </span>
+            <span id="son_right">
+                <span id="son_text_right" class="son_text">
+                    <li>毒素抗性</li>
+                    <li>冲击抗性</li>
+                    <li>穿刺抗性</li>
+                    <li>火焰抗性</li>
+                    <li>冰霜抗性</li>
+                    <li>等离子抗性</li>
+                    <li>闪电抗性</li>
+                    <li>酸液抗性</li>
+                    <li>毒液抗性</li>
+                </span>
+                <span id="son_val_right" class="son_val">
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                    <li><input type="text" value="" /></li>
+                </span>
+            </span>
+            <div id="bloodline_quality">
+                <li>综合评分</li>
+                <li id="bloodline_quality_val"><input type="text" value="" /></li>
+            </div>
         </div>
         <button class="cuateing">计算</button>
     </div>
@@ -112,7 +191,7 @@
                     <p class="furthermore">程序开发：@Kerrrod。有bug或瑕疵欢迎反馈（虽然这个界面就有小瑕疵XD)QQ:2721391079</p>
                     <p class="furthermore">特别鸣谢：@Hati @Slientdragon</p>
                     <p class="furthermore">本作品未经授权禁止用于一切商业行为 地图所有权归@Hati所有</p>
-                    </h1>
+                </h5>
             </div>
         </div>
         <div class="mask"></div>
@@ -640,10 +719,41 @@
                 }
                 return copyarr;
             }
-            let f1 = [], f2 = [], son = [];
-            for (let i = 0; i <= 18; i++) {
-                f1.push($(".pa #perant_inf #father li").children().eq(i).val());
-                f2.push($(".pa #perant_inf #mother li").children().eq(i).val());
+            let f1 = [], f2 = [], son = [], fa_min = $(".pa #perant_inf #father_min_inf").val(), ma_min = $(".pa #perant_inf #mother_min_inf").val();
+            if (fa_min && ma_min) {
+                f1 = fa_min.split(' ');
+                f2 = ma_min.split(' ');
+                for (let i = 0; i <= 18; i++) {
+                    $(".pa #perant_inf #mother li").children().eq(i).attr("value", f2[i]);
+                    $(".pa #perant_inf #father li").children().eq(i).attr("value", f1[i]);
+                }
+            } else if (fa_min) {
+                f1 = fa_min.split(' ');
+                for (let i = 0; i <= 18; i++) {
+                    $(".pa #perant_inf #father li").children().eq(i).attr("value", f1[i]);
+                    f2.push($(".pa #perant_inf #mother li").children().eq(i).val());
+                }
+            } else if (ma_min) {
+                f2 = ma_min.split(' ');
+                for (let i = 0; i <= 18; i++) {
+                    $(".pa #perant_inf #mother li").children().eq(i).attr("value", f2[i]);
+                    f1.push($(".pa #perant_inf #father li").children().eq(i).val());
+                }
+            } else {
+                for (let i = 0; i <= 18; i++) {
+                    f1.push($(".pa #perant_inf #father li").children().eq(i).val());
+                    f2.push($(".pa #perant_inf #mother li").children().eq(i).val());
+                }
+            }
+            if (f1.length != 19) {
+                console.log(f1);
+                Tip("父方的数据填写有误");
+                return;
+            }
+            if (f2.length != 19) {
+                console.log(f2);
+                Tip("母方的数据填写有误");
+                return;
             }
             function Check(arr) {
                 for (let j = 0; j <= arr.length - 2; j++) {
@@ -714,9 +824,9 @@
                         if (f1[a] < f2[a]) {
                             copyarr = f2[a];
                         }
-                    }console.log(copyarr); 
-                    if(diffrent){
-                        copyarr= [copyarr];
+                    } console.log(copyarr);
+                    if (diffrent) {
+                        copyarr = [copyarr];
                         copyarr.push(f2[a]);
                     }
                     son[a] = Check(copyarr);
@@ -727,8 +837,8 @@
                 if (typeof son[a] == "object") {
                     for (let b = 0; b <= son[a].length - 1; b++) {
                         for (let i = 0; i <= son[a].length - 1; i++) {
-                        son[a][b] > 12 ? son[a][b] = 12 : 1;
-                    }
+                            son[a][b] > 12 ? son[a][b] = 12 : 1;
+                        }
                         son[a][b] = iisca(son[a][b]);
                     }
                 } else {
@@ -739,20 +849,37 @@
                 }
             }
 
-            for (let i = 0; i <= $(".pa #son").children().length - 1; i++) {
+            for (let i = 0; i <= 8; i++) {
                 if (typeof son[i] == "object") {
-                    $(".pa #son input").eq(i).val("");
-                    $(".pa #son input").eq(i).val(son[i].join("/"));
+                    $(".pa #son_left input").eq(i).val("");
+                    $(".pa #son_left input").eq(i).val(son[i].join("/"));
                 } else {
-                    $(".pa #son input").eq(i).val("");
-                    $(".pa #son input").eq(i).val(son[i]);
+                    $(".pa #son_left input").eq(i).val("");
+                    $(".pa #son_left input").eq(i).val(son[i]);
                 }
+            }
+            for (let i = 0; i <= 8; i++) {
+                if (typeof son[i] == "object") {
+                    $(".pa #son_right input").eq(i).val("");
+                    $(".pa #son_right input").eq(i).val(son[i].join("/"));
+                } else {
+                    $(".pa #son_right input").eq(i).val("");
+                    $(".pa #son_right input").eq(i).val(son[i]);
+                }
+            }
+            if (typeof son[18] == "object") {
+                $(".pa #bloodline_quality_val input").val("");
+                $(".pa #bloodline_quality_val input").val(son[18].join("/"));
+            } else {
+                $(".pa #bloodline_quality_val input").val("");
+                $(".pa #bloodline_quality_val input").val(son[18]);
             }
             if (set_Option[3]) {
                 let copy = "";
-                for (let i = 0; i <= son.length - 1; i++) {
+                for (let i = 0; i < son.length - 1; i++) {
                     copy += son[i] + " ";
                 }
+                copy += son[son.length - 1];
                 try {
                     navigator.clipboard.writeText(copy).then(
                         function () {
