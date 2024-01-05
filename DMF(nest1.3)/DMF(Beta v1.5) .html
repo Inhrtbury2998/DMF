@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>开源龙日导航程序DMF</title>
-    <link rel="stylesheet" href="DMF(Beta v1.4) .css">
+    <link rel="stylesheet" href="DMF(Beta v1.5) .css">
     <script src="jquery.min.js"></script>
     <script src="clipboard.min.js"></script>
 </head>
@@ -252,7 +252,7 @@
 
     </div>
     <script>
-        function a(a, b) {
+               function a(a, b) {
             let Direction;
             Direction = Math.atan(b / a) * 180 / Math.PI;
             if (Sx - x0 > 0) {
@@ -279,6 +279,42 @@
                 });
             }
         }
+        function have_li1() {//判断是否已经有第一个点，没有就创建
+                    if (!div_small.children[3]) {
+                        return function () {
+                            let img_dian1 = document.createElement('li');
+                            div_small.insertBefore(img_dian1, div_small.children[0]);
+                            img_dian1.className = 'li';
+                            img_dian1.setAttribute('id', '1');
+                            return (img_dian1);
+                        }
+                        return (a());
+                    } else {
+                        return function () {
+                            let img_dian1 = div_small.children[1];
+                            img_dian1.className = 'li';
+                            return (img_dian1);
+                        }
+                    }
+                }
+                function have_li2() {//判断是否已经有第二个点，没有就创建
+                    if (!div_small.children[4]) {
+                        return function () {
+                            let img_dian2 = document.createElement('li');
+                            div_small.insertBefore(img_dian2, div_small.children[0]);
+                            img_dian2.className = 'li';
+                            img_dian2.setAttribute('id', '2');
+                            return (img_dian2);
+                        }
+                        return (a());
+                    } else {
+                        return function () {
+                            let img_dian2 = div_small.children[0];
+                            img_dian2.className = 'li';
+                            return (img_dian2);
+                        }
+                    }
+                }
         let x0;
         let y0;
         let Sy;
@@ -366,7 +402,6 @@
                 big_div.style.display = 'none';
                 stay = 1;
             }
-
         })
         $('ul li:eq(2)').hover(function () {//少一個css的li3-border
             $('ul div').attr('class', 'li3-border');
@@ -405,26 +440,7 @@
         div_small.addEventListener('click', function (e) {
             if (zhuangtai == 0) {
                 let a;
-                function have_li() {
-                    if (!div_small.children[3]) {
-                        return function () {
-                            let img_dian1 = document.createElement('li');
-                            div_small.insertBefore(img_dian1, div_small.children[0]);
-                            img_dian1.className = 'li';
-                            img_dian1.setAttribute('id', '1');
-                            return (img_dian1);
-                        }
-                        return (a());
-                    } else {
-                        return function () {
-                            let img_dian1 = div_small.children[1];
-                            img_dian1.className = 'li';
-                            return (img_dian1);
-                        }
-
-                    }
-                }
-                let img_dian1 = have_li()();
+                let img_dian1 = have_li1()();
                 a = img_dian1.parentNode.style.width.substring(0, img_dian1.parentNode.style.width.length - 2);//div_small.width
                 Sx = Math.round((e.pageX - a / 2 - img_dian1.parentNode.offsetLeft) * 3.49);
                 img_dian1.style.left = e.pageX - img_dian1.parentNode.offsetLeft - 3 + "px";
@@ -434,26 +450,7 @@
                 zhuangtai = 1;
             } else if (zhuangtai == 1) {
                 let a;
-                function have_li() {
-                    if (!div_small.children[4]) {
-                        return function () {
-                            let img_dian2 = document.createElement('li');
-                            div_small.insertBefore(img_dian2, div_small.children[0]);
-                            img_dian2.className = 'li';
-                            img_dian2.setAttribute('id', '2');
-                            return (img_dian2);
-                        }
-                        return (a());
-                    } else {
-                        return function () {
-                            let img_dian2 = div_small.children[0];
-                            img_dian2.className = 'li';
-                            return (img_dian2);
-                        }
-
-                    }
-                }
-                let img_dian2 = have_li()();
+                let img_dian2 = have_li2()();
                 a = img_dian2.parentNode.style.width.substring(0, img_dian2.parentNode.style.width.length - 2);//div_small.width
                 x0 = Math.round((e.pageX - a / 2 - img_dian2.parentNode.offsetLeft) * 3.49);
                 a = img_dian2.parentNode.style.height.substring(0, img_dian2.parentNode.style.height.length - 2);//div_small.width
@@ -577,11 +574,19 @@
             shortcut('146e', '320s', 'end');
         }
         j.onclick = function calculating() {
+            if(startX.value=="undefined"||startY.value=="undefined"||startX.value==""||startY.value==""){//判断数据是否为空，若为空则提示
+                Tip("请输入正确的起点坐标");
+                return;
+            }
+            if(endX.value=="undefined"||endY.value=="undefined"||endX.value==""||endY.value==""){//判断数据是否为空，若为空则提示
+                Tip("请输入正确的终点坐标");
+                return;
+            }
             Sx = startX.value;
             Sy = startY.value;
             x0 = endX.value;
             y0 = endY.value;
-            if (!(Sx.indexOf('W') != -1 && Sx.indexOf('w') != -1 && Sx.indexOf('e') != -1 && Sx.indexOf('E') != -1)) {
+            if (!(Sx.indexOf('W') != -1 && Sx.indexOf('w') != -1 && Sx.indexOf('e') != -1 && Sx.indexOf('E') != -1)) {//如果数据是经纬度形式就转换成坐标轴格式
                 switch (Sx.charAt(Sx.length - 1)) {
                     case "E":
                         Sx = Sx.substring(0, Sx.length - 1)
@@ -661,6 +666,22 @@
                     default:
                 }
             }
+            /*当点击计算按钮后把数据转换到图片上反映出来*/
+            Sx=Sx*1;//将数据隐式转换为number类型
+            Sy=Sy*1;
+            x0=x0*1;
+            y0=y0*1;
+            let b;
+            let img_dian1 = have_li1()();
+            let img_dian2 = have_li2()();
+            b = img_dian1.parentNode.style.width.substring(0, img_dian1.parentNode.style.width.length - 2);//div_small.width
+            console.log(b / 2 + img_dian1.parentNode.offsetLeft + Sx - 3 + "px");
+            img_dian1.style.left = b / 2  + Sx/3.49 - 3 + "px";
+            img_dian2.style.left = b / 2 + x0/3.49 - 3 + "px";
+            b = img_dian1.parentNode.style.height.substring(0, img_dian1.parentNode.style.height.length - 2);
+            img_dian1.style.top = b / 2 - Sy/3.49 - 3 + "px";
+            img_dian2.style.top = b / 2 - y0/3.49 - 3 + "px";
+            zhuangtai = -1;
             //数学算法
             let sx = Sx - x0;
             let sy = Sy - y0;
@@ -720,7 +741,7 @@
                 return copyarr;
             }
             let f1 = [], f2 = [], son = [], fa_min = $(".pa #perant_inf #father_min_inf").val(), ma_min = $(".pa #perant_inf #mother_min_inf").val();
-            if (fa_min && ma_min) {
+            if (fa_min && ma_min) {//判断父母信息的快捷输入框是否有数据，如果有，则以快捷输入框的为准
                 f1 = fa_min.split(' ');
                 f2 = ma_min.split(' ');
                 for (let i = 0; i <= 18; i++) {
@@ -739,7 +760,7 @@
                     $(".pa #perant_inf #mother li").children().eq(i).attr("value", f2[i]);
                     f1.push($(".pa #perant_inf #father li").children().eq(i).val());
                 }
-            } else {
+            } else {//快捷输入框没有数据时用普通的父母属性框
                 for (let i = 0; i <= 18; i++) {
                     f1.push($(".pa #perant_inf #father li").children().eq(i).val());
                     f2.push($(".pa #perant_inf #mother li").children().eq(i).val());
@@ -752,8 +773,8 @@
             if (f2.length != 19) {
                 Tip("母方的数据填写有误");
                 return;
-            }
-            function Check(arr) {
+            }//查重函数
+            function check(arr) {
                 for (let j = 0; j <= arr.length - 2; j++) {
                     for (let i = j + 1; i <= arr.length - 1;) {
                         if (arr[j] == arr[i]) {
@@ -808,11 +829,11 @@
                         }
                         diffrent ? copyf2.push(f1[a][b]) : 1;
                     }
-                    son[a] = Check(copyf2);
+                    son[a] = check(copyf2);
                 } else if (typeof f1[a] == "object") {
-                    son[a] = Check(capr_Obj(f1[a], f2[a]));
+                    son[a] = check(capr_Obj(f1[a], f2[a]));
                 } else if (typeof f2[a] == "object") {
-                    son[a] = Check(capr_Obj(f2[a], f1[a]));
+                    son[a] = check(capr_Obj(f2[a], f1[a]));
                 } else {
                     let copyarr = f1[a];
                     var diffrent = false;
@@ -827,7 +848,7 @@
                         copyarr = [copyarr];
                         copyarr.push(f2[a]);
                     }
-                    son[a] = Check(copyarr);
+                    son[a] = check(copyarr);
                 }
             }
 
@@ -846,8 +867,7 @@
                     son[a] = iisca(son[a]);
                 }
             }
-            console.log(son);
-            for (let i = 0; i <= 8; i++) {
+            for (let i = 0; i <= 8; i++) {//将子代左侧的数据填充为son数组的前8个
                 if (typeof son[i] == "object") {
                     $(".pa #son_left input").eq(i).val("");
                     $(".pa #son_left input").eq(i).val(son[i].join("/"));
@@ -856,16 +876,16 @@
                     $(".pa #son_left input").eq(i).val(son[i]);
                 }
             }
-            for (let i = 0; i <= 8; i++) {
-                if (typeof son[i+8] == "object") {
-                    console.log(son[i+8]);
+            for (let i = 0; i <= 8; i++) {//将子代左右侧的数据填充为son数组的9-18个
+                if (typeof son[i + 8] == "object") {
+                    console.log(son[i + 8]);
                     $(".pa #son_right input").eq(i).val("");
-                    $(".pa #son_right input").eq(i).val(son[i+8].join("/"));
+                    $(".pa #son_right input").eq(i).val(son[i + 8].join("/"));
                 } else {
                     $(".pa #son_right input").eq(i).val("");
-                    $(".pa #son_right input").eq(i).val(son[i+8]);
+                    $(".pa #son_right input").eq(i).val(son[i + 8]);
                 }
-            }
+            }//填充子代的综合属性
             if (typeof son[18] == "object") {
                 $(".pa #bloodline_quality_val input").val("");
                 $(".pa #bloodline_quality_val input").val(son[18].join("/"));
@@ -873,7 +893,7 @@
                 $(".pa #bloodline_quality_val input").val("");
                 $(".pa #bloodline_quality_val input").val(son[18]);
             }
-            if (set_Option[3]) {
+            if (set_Option[3]) {//如果自动复制打开则执行自动复制
                 let copy = "";
                 for (let i = 0; i < son.length - 1; i++) {
                     copy += son[i] + " ";
@@ -899,7 +919,7 @@
                 }
             }
         })
-        function acsii(f1) {
+        function acsii(f1) {//遗传数据的转换对照表
             switch (f1) {
                 case "E":
                     return 1;
