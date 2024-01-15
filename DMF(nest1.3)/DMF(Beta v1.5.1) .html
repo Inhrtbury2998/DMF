@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>开源龙日导航程序DMF</title>
-    <link rel="stylesheet" href="DMF(Beta v1.5.1) .css">
+    <link rel="stylesheet" href="DMF(Beta v1.5) .css">
     <script src="jquery.min.js"></script>
     <script src="clipboard.min.js"></script>
 </head>
@@ -69,7 +69,7 @@
                 <li><input type="text" value="B/d+" /></li>
                 <li><input type="text" value="B/d+" /></li>
                 <li><input type="text" value="B/d+" /></li>
-                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B" /></li>
             </div>
             <div id="mother_text">
                 <h4>母亲</h4>
@@ -112,7 +112,7 @@
                 <li><input type="text" value="B/d+" /></li>
                 <li><input type="text" value="B/d+" /></li>
                 <li><input type="text" value="B/d+" /></li>
-                <li><input type="text" value="B/d+" /></li>
+                <li><input type="text" value="B" /></li>
             </div>
         </div>
         <div id="son">
@@ -178,9 +178,9 @@
         <div id=help-index>
             <li id="close" class="icon"></li>
             <div class="text">
-                <h3>帮助(B1.5)</h3>
+                <h3>帮助(B1.5.1)</h3>
                 <h5>
-                    <p>点图导航：点击图片可自动获取坐标</p>
+                    <p>点图导航：点击图片可自动获取坐标，蓝色起点，红色终点</p>
                     <p>手动输入：在输入框输入对应的坐标，支持带经纬度格式（游戏中按i查看经纬度）和坐标轴格式</p>
                     <p>快捷计算：点击按钮，自动输入对应地点的经纬度</p>
                     <p>结果查看：输入完坐标后点击“计算”，页面底部会出现两条信息，第一行是前进方向（游戏中按“esc”，设置->游戏->开启静态罗盘，即可让方向始终显示在游戏顶部），另一行是前进距离，同时地图上的点也会移到输入数据对应的坐标
@@ -289,6 +289,7 @@
                     div_small.insertBefore(img_dian1, div_small.children[0]);
                     img_dian1.className = 'li';
                     img_dian1.setAttribute('id', '1');
+                    img_dian1.style.cssText+="background-color: blue;"
                     return (img_dian1);
                 }
                 return (a());
