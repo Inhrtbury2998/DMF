@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="Zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开源龙日导航程序DMF</title>
+    <link rel="stylesheet" href="./DMF(Release v1.0.1).css">
+    <script src="jquery.min.js"></script>
+    <script src="clipboard.min.js"></script>
+    <script src="./function/findMinIndex.js"></script>
+</head>
+
+<body>
+    <div class="header-menu">
+        <ul class="menu">
+            <div></div>
+            <li class="menu-1" id="1"><a href="#">计算界面</a></li>
+            <li class="menu-2" id="2"><a href="#">设置</a></li>
+        </ul>
+    </div>
+    <span id="tip"></span>
+    <div class="index">
+        <li id="help" class="icon"></li>
+        <div id=help-index>
+            <li id="close" class="icon"></li>
+            <div class="text">
+                <h3>帮助(B1.5.1)</h3>
+                <h5>
+                    <p>点图导航：点击图片可自动获取坐标，蓝色起点，红色终点</p>
+                    <p>手动输入：在输入框输入对应的坐标，支持带经纬度格式（游戏中按i查看经纬度）和坐标轴格式</p>
+                    <p>快捷计算：点击按钮，自动输入对应地点的经纬度</p>
+                    <p>结果查看：输入完坐标后点击“计算”，页面底部会出现两条信息，第一行是前进方向（游戏中按“esc”，设置->游戏->开启静态罗盘，即可让方向始终显示在游戏顶部），另一行是前进距离，同时地图上的点也会移到输入数据对应的坐标</p>
+                    <p>查询螃蟹点：仅需要输入起点的x、y（即上面两个输入框）后点击查询最近的螃蟹刷新点，程序会自动填充最近螃蟹刷新点的坐标在终点坐标输入框，并计算出前往离起点最近的刷新点的方向</p>
+                    <p>自动复制：将计算结果自动复制到剪贴板</p>
+                    <p>设置：控制对应功能是否开启</p>
+                    <p>bug公示：在第一次打开程序后用点图功能点击一次再用快捷输入或手动输入并计算结果或查询最近螃蟹刷新点会导致点图导航功能显示异常。解决方法：先使用快捷计算计算两个不同的地方，接下来混合使用就没有问题了。若已经进行了误操作，按f5进行刷新即可恢复
+                    </p>
+                    <p class="furthermore">程序开发：@鹤屿 @Kerrrod</p>
+                    <p class="furthermore">地图绘制：@LeafGreen_Snake叶绿蛇</p>
+                    <p class="furthermore">信息收集：@阿尔法Alpha @LeafGreen_Snake叶绿蛇 @娜米托莉(ELEVEN) @Ris。</p>
+                    <p class="furthermore">鸣谢：@Hati @Slientdragon @最后一只斑鸠</p>
+                    <p class="furthermore">以上名单按字母排序</p>
+                    <p class="furthermore">有bug或瑕疵欢迎反馈（虽然这个界面就有小瑕疵XD)@Kerrrod QQ:2721391079</p>
+                    <p class="furthermore">本作品未经授权禁止用于一切商业行为</p>
+                </h5>
+            </div>
+        </div>
+        <div class="mask"></div>
+        <div class="Img">
+            <div class="div-small" style="height: 600px; width: 600px;">
+                <img src="image/x.bmp" class="ten" id="y" alt="" style="left: -50%;top: 0px;" draggable="false">
+                <img src="image/y.bmp" class="ten" id="x" alt="" style="left: 0px;top: -50%;" draggable="false">
+                <img src="image/map-small.png" class="small-img" alt="" draggable="false">
+            </div>
+            <div class="" id="big" style="border:3px solid rgb(226, 116, 37);">
+                <img src="image/map-qq.png" alt="">
+            </div>
+        </div>
+        <div class="div">
+            <input class="start-x" placeholder="请输入起点的X坐标(带经纬)">
+            <p><input class="start-y" placeholder="请输入起点的Y坐标(带经纬)"></p>
+            <input class="end-x" placeholder="请输入目的地的X坐标(带经纬)">
+            <p><input class="end-y" placeholder="请输入目的地的Y坐标(带经纬)"></p>
+        </div>
+        <div>
+            <button class="calculating" data-clipboard-target="#text">计算</button>
+            <button id="food" data-clipboard-target="#text">查询最近的螃蟹刷新点</button>
+        </div>
+        <div class="Keyborad">
+            <div class="start">
+                起点：
+                <select name="地点" id="start-option"></select>
+            </div>
+            <div class="end">
+                终点：
+                <select name="地点" id="end-option"></select>
+            </div>
+        </div>
+        <span class="Direction" id="Direction"></span>
+        <span class="distance" id="distance"></span>
+        <textarea id="text"></textarea>
+    </div>
+    <div class="set">
+        <ul></ul>
+        <form>
+            <button class="useset">运用</button>
+        </form>
+    </div>
+    <script>
+        function a(a, b) {
+            let Direction;
+            Direction = Math.atan(b / a) * 180 / Math.PI;
+            if (Sx - x0 > 0) {
+                if (Sy - y0 > 0) {
+                    Direction = "W偏S:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                } else {
+                    Direction = "W偏N:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                }
+            } else {
+                if (Sy - y0 > 0) {
+                    Direction = "E偏S:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                } else {
+                    Direction = "E偏N:" + Math.round(Direction * 100) / 100 + '度' + '\n';
+                }
+            }
+            return (Direction);
+        }
+        function Tip(msg) {
+            tip.text("");
+            tip.text(msg);
+            for (let i = 0; i <= 1; i++) {
+                setTimeout(() => {
+                    tip.fadeToggle(600);
+                });
+            }
+        }
+        function have_li1() {//判断是否已经有第一个点，没有就创建
+            if (!div_small.children[3]) {
+                return function () {
+                    let img_dian1 = document.createElement('li');
+                    div_small.insertBefore(img_dian1, div_small.children[0]);
+                    img_dian1.className = 'li';
+                    img_dian1.setAttribute('id', '1');
+                    img_dian1.style.cssText += "background-color: blue;"
+                    return (img_dian1);
+                }
+                return (a());
+            } else {
+                return function () {
+                    let img_dian1 = div_small.children[1];
+                    img_dian1.className = 'li';
+                    return (img_dian1);
+                }
+            }
+        }
+        function have_li2() {//判断是否已经有第二个点，没有就创建
+            if (!div_small.children[4]) {
+                return function () {
+                    let img_dian2 = document.createElement('li');
+                    div_small.insertBefore(img_dian2, div_small.children[0]);
+                    img_dian2.className = 'li';
+                    img_dian2.setAttribute('id', '2');
+                    return (img_dian2);
+                }
+                return (a());
+            } else {
+                return function () {
+                    let img_dian2 = div_small.children[0];
+                    img_dian2.className = 'li';
+                    return (img_dian2);
+                }
+            }
+        }
+        let x0;
+        let y0;
+        let Sy;
+        let Sx;
+        let tip = $("#tip");
+        const point =
+            [
+                [
+                    142,
+                    57
+                ],
+                [
+                    145,
+                    101
+                ],
+                [
+                    148,
+                    43
+                ],
+                [
+                    152,
+                    67
+                ],
+                [
+                    157,
+                    129
+                ],
+                [
+                    158,
+                    99
+                ],
+                [
+                    166,
+                    58
+                ],
+                [
+                    169,
+                    63
+                ],
+                [
+                    171,
+                    122
+                ],
+                [
+                    171,
+                    85
+                ],
+                [
+                    202,
+                    105
+                ],
+                [
+                    205,
+                    105
+                ],
+                [
+                    213,
+                    106
+                ],
+                [
+                    217,
+                    115
+                ],
+                [
+                    218,
+                    188
+                ],
+                [
+                    222,
+                    210
+                ],
+                [
+                    223,
+                    123
+                ],
+                [
+                    225,
+                    211
+                ],
+                [
+                    7,
+                    -3
+                ],
+                [
+                    355,
+                    -555
+                ],
+                [
+                    363,
+                    -541
+                ],
+                [
+                    -77,
+                    33
+                ],
+                [
+                    -76,
+                    35
+                ],
+                [
+                    -76,
+                    39
+                ],
+                [
+                    -83,
+                    72
+                ],
+                [
+                    -88,
+                    68
+                ],
+                [
+                    -96,
+                    79
+                ],
+                [
+                    -1,
+                    -13
+                ],
+                [
+                    -11,
+                    -26
+                ],
+                [
+                    -30,
+                    -33
+                ],
+                [
+                    -25,
+                    -46
+                ],
+                [
+                    -32,
+                    -53
+                ],
+                [
+                    -30,
+                    -60
+                ],
+                [
+                    -30,
+                    -68
+                ],
+                [
+                    -33,
+                    -68
+                ],
+                [
+                    -26,
+                    -71
+                ],
+                [
+                    -33,
+                    -83
+                ],
+                [
+                    -43,
+                    -89
+                ],
+                [
+                    -54,
+                    -6
+                ],
+                [
+                    -53,
+                    -26
+                ],
+                [
+                    -55,
+                    -23
+                ],
+                [
+                    -56,
+                    -16
+                ],
+                [
+                    -63,
+                    -18
+                ],
+                [
+                    -99,
+                    -291
+                ],
+                [
+                    -104,
+                    -132
+                ],
+                [
+                    -121,
+                    -267
+                ],
+                [
+                    -148,
+                    -290
+                ],
+                [
+                    -168,
+                    -316
+                ],
+                [
+                    -180,
+                    -287
+                ],
+                [
+                    -217,
+                    -306
+                ],
+                [
+                    -225,
+                    -300
+                ],
+                [
+                    -226,
+                    -125
+                ],
+                [
+                    -235,
+                    -135
+                ],
+                [
+                    -235,
+                    -133
+                ],
+                [
+                    -248,
+                    -311
+                ],
+                [
+                    -391,
+                    -152
+                ],
+                [
+                    -394,
+                    -153
+                ],
+                [
+                    -366,
+                    -162
+                ],
+                [
+                    -406,
+                    -212
+                ],
+                [
+                    -413,
+                    -734
+                ],
+                [
+                    -433,
+                    -718
+                ],
+                [
+                    -435,
+                    -739
+                ],
+                [
+                    -485,
+                    -618
+                ],
+                [
+                    -442,
+                    -247
+                ],
+                [
+                    -307,
+                    -242
+                ],
+                [
+                    -302,
+                    -244
+                ]
+            ]
+        let index = [true, false];
+        const img_multiple = 2.5;
+        const img_size = 5;
+        let food = false;
+        let set_Option = [true, true, true, true];//img,keyborad,num,auto-copy
+        const place = {
+            name: ["大石头", "拱门", "蘑菇河源头", "湖心", "火龙谷头", "大树", "首领石（石台）", "沼泽", "陨石坑"],//快捷输入部分的中文地名，一一对应，格式：“place1”，“place2”完善该对象四种数据后自动添加对应按钮
+            Idname: ["big-rock", "arch", "mushroom-river-origin", "mid-lank", "fire-dragons-valley-head", "big-tree", "pride", "swamp", "crater"],//会给对应地名的按钮设置的id
+            x: ['15e', '50e', '40w', '130e', '530e', '155w', '450e', '550w', '570e'],//对应地点的x，y坐标
+            y: ['53s', '250n', '323s', '29n', '330s', '185n', '150n', '340n', '320s']
+        };
+        var clipboard = new ClipboardJS('.calculating');
+        const set_option = {
+            Text: ["图片", "快捷键", "手动输入", "自动复制"],
+            Idname: ["Img", "Keyboard", "Num", "Auto-copy"],
+            Classname: ["img-set", "keyboard-set", "num-set", "auto-copy"],
+        }//设置中各个选项的class，text，id
+        // 获取元素
+        let div = document.querySelector('.div');
+        let big_img = document.querySelector('#big').querySelector('img');
+        let big_div = document.querySelector('#big');
+        let small_img = document.querySelector('.small-img');
+        let div_small = document.querySelector('.div-small');
+        let start_div = document.querySelector('.start');
+        let end_div = document.querySelector('.end');
+        let yz = document.querySelector('#y');
+        let xz = document.querySelector('#x');
+        let j = document.querySelector('.calculating');
+        let startX = document.querySelector('.start-x');
+        let startY = document.querySelector('.start-y');
+        let endX = document.querySelector('.end-x');
+        let endY = document.querySelector('.end-y');
+        let output = document.querySelector('.output');
+        let outputDirection = document.querySelector('.Direction');
+        let output_distance = document.querySelector('.distance');
+        let zhuangtai = 0;
+        $('ul div').attr('class', 'li1-border');
+        $('.set').hide();
+        for (let i = 0; i < place.name.length; i++) {//添加地点进选项
+            $("#start-option").append(`<option>${place.name[i]}</option>`);
+            $("#end-option").append(`<option>${place.name[i]}</option>`);
+        }
+        for (let i = 0; i < set_Option.length; i++) {
+            $('.set ul').append("<li id=\"" + set_option.Idname[i] + "\"><span class=\"" + set_option.Classname[i] + "\">" + set_option.Text[i] + "<\/span><span class=\"left\"><\/span><span class=\"text\">开<\/span><span class=\"right\"><\/span><\/li>");
+        }
+        document.addEventListener("keyup", e => {
+            if (e.keyCode == 13 && $('.index').css('display') != "none") {
+                j.onclick();
+            }
+        })
+        div_small.addEventListener('mousemove', function (e) {
+            x = e.pageX;
+            y = e.pageY;
+            this.style.cursor = 'none';
+            big_div.style.width = div_small.style.width;
+            big_div.style.height = div_small.style.height;
+            yz.style.top = (e.pageY - div_small.offsetTop) + 'px';
+            xz.style.left = (e.pageX - div_small.offsetLeft) + 'px';
+            big_div.style.display = 'inline-block';
+            big_img.style.left = - (e.pageX - div_small.offsetLeft) * img_size + 300 + "px";
+            big_img.style.top = - (e.pageY - div_small.offsetTop) * img_size + 300 + "px";
+            stay = 0;
+        })
+        div_small.addEventListener('mouseout', function () {
+            if (stay == 0) {//这stay就是一个bug，但是它报错还修好了一个bug
+                big_div.style.display = 'none';
+                stay = 1;
+            }
+        })
+        $('ul li:eq(2)').hover(function () {
+            $('ul div').attr('class', 'li3-border');
+        })
+        $('ul li:eq(1)').hover(function () {
+            $('ul div').attr('class', 'li2-border');
+        })
+        $('.useset').click(function (e) {//运用被点击后运用设置
+            e.preventDefault();
+            set_Option[0] ? $('.Img').show() : $('.Img').hide();
+            set_Option[1] ? $('.Keyborad').show() : $('.Keyborad').hide();
+            set_Option[2] ? $('.div').show() : $('.div').hide();
+            Tip("设置成功");
+        })
+        for (let i = 0; i < $('.set ul li').length; i++) {
+            $('.set ul li').eq(i).click(function () {
+                let li = $('.set ul li').eq(i);
+                set_Option[i] = !set_Option[i];
+                if (set_Option[i]) {
+                    li.children(1).eq(1).css('opacity', 0.7);
+                    li.children(1).eq(3).css('opacity', 0.3);
+                } else {
+                    li.children(1).eq(3).css('opacity', 0.7);
+                    li.children(1).eq(1).css('opacity', 0.25);
+                }
+                set_Option[i] ? li[0].children[2].innerHTML = '开' : li[0].children[2].innerHTML = '关';
+            })
+            $('.set ul li').eq(i).hover(function () {
+                $('.set ul li').attr('id', '');
+                $('.set ul li').eq(i).attr('id', 'on');
+            })
+        }
+        div_small.addEventListener('click', function (e) {
+            if (zhuangtai == 0) {
+                let a;
+                let img_dian1 = have_li1()();
+                a = img_dian1.parentNode.style.width.substring(0, img_dian1.parentNode.style.width.length - 2);//div_small.width
+                Sx = Math.round((e.pageX - a / 2 - img_dian1.parentNode.offsetLeft) * img_multiple);
+                img_dian1.style.left = e.pageX - img_dian1.parentNode.offsetLeft - 3 + "px";
+                a = img_dian1.parentNode.style.height.substring(0, img_dian1.parentNode.style.height.length - 2);
+                Sy = Math.round((a / 2 - e.pageY + img_dian1.parentNode.offsetTop) * img_multiple);//Math.round((a - e.pageY + img_dian1.parentNode.offsetTop - a / 2) * img_multiple)
+                img_dian1.style.top = e.pageY - img_dian1.parentNode.offsetTop - 3 + "px";
+                zhuangtai = 1;
+            } else if (zhuangtai == 1) {
+                let a;
+                let img_dian2 = have_li2()();
+                a = img_dian2.parentNode.style.width.substring(0, img_dian2.parentNode.style.width.length - 2);//div_small.width
+                x0 = Math.round((e.pageX - a / 2 - img_dian2.parentNode.offsetLeft) * img_multiple);
+                a = img_dian2.parentNode.style.height.substring(0, img_dian2.parentNode.style.height.length - 2);//div_small.width
+                y0 = Math.round((a / 2 - e.pageY + img_dian2.parentNode.offsetTop) * img_multiple);//Math.round((a - e.pageY + img_dian2.parentNode.offsetTop - a / 2) * img_multiple)
+                img_dian2.style.left = e.pageX - img_dian2.parentNode.offsetLeft - 3 + "px";
+                img_dian2.style.top = e.pageY - img_dian2.parentNode.offsetTop - 3 + "px";
+                zhuangtai = -1;
+            } else {
+                const li = document.querySelectorAll('.li');
+                for (let i = 0; i <= li.length - 1; i++) {
+                    li[i].className = "noli";
+                }
+                zhuangtai = 0;
+            }
+            startX.value = Sx;
+            startY.value = Sy;
+            endY.value = y0;
+            endX.value = x0;
+        })
+        $('#help').click(function () {
+            $('#help-index').show();
+            $('.mask').show();
+        })
+        $('#close').click(function () {
+            $('#help-index').hide();
+            $('.mask').hide();
+        })
+        $('.menu-3').click(function (e) {
+            e.preventDefault();
+            if (!index[2]) {
+                $('body').children().hide();
+                $('.header-menu').show();
+                $('.pa').show();
+                index = [false, false, true];
+            }
+        })
+        $('.menu-2').click(function (e) {
+            e.preventDefault();
+            if (!index[1]) {
+                $('body').children().hide();
+                $('.header-menu').show();
+                $('.set').show();
+                index = [false, true, false];
+            }
+        })
+        $('.menu-1').click(function (e) {
+            e.preventDefault();
+            if (!index[0]) {
+                $('body').children().hide();
+                $('.header-menu').show();
+                $('.index').show();
+                index = [true, false, false];
+            }
+        })
+        //按键快捷输入坐标
+        function shortcut(X, Y, Class) {
+            if (Class == 'start') {
+                startX.value = '';
+                startY.value = '';
+                startX.value = X;
+                startY.value = Y;
+            } else if (Class == 'end') {
+                endX.value = '';
+                endY.value = '';
+                endX.value = X;
+                endY.value = Y;
+            }
+        }
+
+        //原本的按钮式用的代码
+
+        // for(let i=0;i<place.name.length;i++){
+        //     const prefix=['start','end'];
+        //     for(let j=0;j<2;j++){
+        //         $(`#${prefix[j]}-${place.Idname[i]}`).click(function () {
+        //         shortcut(`${place.x[i]}`, `${place.y[i]}`, `${prefix[j]}`);
+        //         });
+        //     }
+        // }
+        $('#start-option').change(() => {
+            shortcut(place.x[$("#start-option").get(0).selectedIndex], place.y[$("#start-option").get(0).selectedIndex], 'start');
+        })
+        $('#end-option').change(() => {
+            shortcut(place.x[$("#end-option").get(0).selectedIndex], place.y[$("#end-option").get(0).selectedIndex], 'end');
+        })
+        j.onclick = function calculating() {
+            console.log(food);
+            if (startX.value == "undefined" || startY.value == "undefined" || startX.value == "" || startY.value == "") {//判断数据是否为空，若为空则提示
+                Tip("请输入正确的起点坐标");
+                food = 0;
+                return;
+            }
+            if (!food) {
+                if (endX.value == "undefined" || endY.value == "undefined" || endX.value == "" || endY.value == "") {//判断数据是否为空，若为空则提示
+                    Tip("请输入正确的终点坐标");
+                    return;
+                }
+            }
+            Sx = startX.value;
+            Sy = startY.value;
+            if (!food) {
+                x0 = endX.value;
+                y0 = endY.value;
+                if (!(x0.indexOf('W') != -1 && x0.indexOf('w') != -1 && x0.indexOf('e') != -1 && x0.indexOf('E') != -1)) {
+                    switch (x0.charAt(x0.length - 1)) {
+                        case "E":
+                            x0 = x0.substring(0, x0.length - 1)
+                            break;
+                        case "e":
+                            x0 = x0.substring(0, x0.length - 1)
+                            break;
+                        case "W":
+                            x0 = x0.substring(0, x0.length - 1) * -1
+                            break;
+                        case "w":
+                            x0 = x0.substring(0, x0.length - 1) * -1
+                            break;
+                        default:
+                    }
+                }
+                if (!(y0.indexOf('N') != -1 && y0.indexOf('n') != -1 && y0.indexOf('s') != -1 && y0.indexOf('S') != -1)) {
+                    switch (y0.charAt(y0.length - 1)) {
+                        case "N":
+                            y0 = y0.substring(0, y0.length - 1)
+                            break;
+                        case "n":
+                            y0 = y0.substring(0, y0.length - 1)
+                            break;
+                        case "S":
+                            y0 = y0.substring(0, y0.length - 1) * -1
+                            break;
+                        case "s":
+                            y0 = y0.substring(0, y0.length - 1) * -1
+                            break;
+                        case "":
+                            Tip("请输入正确的数值");
+                            outputDirection.innerHTML = " ";
+                            output_distance.innerHTML = " ";
+                            return;
+                            break;
+                        default:
+                    }
+                }
+                x0 = x0 * 1;
+                y0 = y0 * 1;
+            }
+            if (!(Sx.indexOf('W') != -1 && Sx.indexOf('w') != -1 && Sx.indexOf('e') != -1 && Sx.indexOf('E') != -1)) {//如果数据是经纬度形式就转换成坐标轴格式
+                switch (Sx.charAt(Sx.length - 1)) {
+                    case "E":
+                        Sx = Sx.substring(0, Sx.length - 1)
+                        break;
+                    case "e":
+                        Sx = Sx.substring(0, Sx.length - 1)
+                        break;
+                    case "W":
+                        Sx = Sx.substring(0, Sx.length - 1) * -1
+                        break;
+                    case "w":
+                        Sx = Sx.substring(0, Sx.length - 1) * -1
+                        break;
+                    default:
+                }
+            }
+            if (!(Sy.indexOf('N') != -1 && Sy.indexOf('n') != -1 && Sy.indexOf('s') != -1 && Sy.indexOf('S') != -1)) {
+                switch (Sy.charAt(Sy.length - 1)) {
+                    case "N":
+                        Sy = Sy.substring(0, Sy.length - 1)
+                        break;
+                    case "n":
+                        Sy = Sy.substring(0, Sy.length - 1)
+                        break;
+                    case "S":
+                        Sy = Sy.substring(0, Sy.length - 1) * -1
+                        break;
+                    case "s":
+                        Sy = Sy.substring(0, Sy.length - 1) * -1
+                        break;
+                    case "":
+                        Tip("请输入正确的数值");
+                        food = false;
+                        outputDirection.innerHTML = " ";
+                        output_distance.innerHTML = " ";
+                        return;
+                        break;
+                    default:
+                }
+            }
+            /*当点击计算按钮后把数据转换到图片上反映出来*/
+            Sx = Sx * 1;//将数据隐式转换为number类型
+            Sy = Sy * 1;
+            if (food) {
+                let every_point_distance = [];
+                console.log(point.length);
+                for (let i = 0; i < point.length; i++) {
+                    every_point_distance.push((findPoint(point[i][1], point[i][0], Sx, Sy)));
+                }
+                console.log(every_point_distance);
+                console.log(findMinIndex(every_point_distance));
+                x0 = point[findMinIndex(every_point_distance)][1];
+                y0 = point[findMinIndex(every_point_distance)][0];
+                endX.value=x0;
+                endY.value=y0;
+            }
+            let b;
+            let img_dian1 = have_li1()();
+            let img_dian2 = have_li2()();
+            b = img_dian1.parentNode.style.width.substring(0, img_dian1.parentNode.style.width.length - 2);//div_small.width
+            img_dian1.style.left = b / 2 + Sx / img_multiple - 3 + "px";
+            img_dian2.style.left = b / 2 + x0 / img_multiple - 3 + "px";
+            b = img_dian1.parentNode.style.height.substring(0, img_dian1.parentNode.style.height.length - 2);
+            img_dian1.style.top = b / 2 - Sy / img_multiple - 3 + "px";
+            img_dian2.style.top = b / 2 - y0 / img_multiple - 3 + "px";
+            zhuangtai = -1;
+            //数学算法
+            let sx = Sx - x0;
+            let sy = Sy - y0;
+            if (sx < 0) {
+                sx = sx * -1;
+            }
+            if (sy < 0) {
+                sy = sy * -1;
+            }
+            //改变内容，使计算结果可视化
+            outputDirection.innerHTML = " ";
+            output_distance.innerHTML = " ";
+            outputDirection.innerHTML = a(sx, sy);
+            output_distance.innerHTML = "距离:" + Math.round(Math.sqrt(sx * sx + sy * sy) * 100) / 100;
+            if (set_Option[3]) {
+                let Direction = outputDirection.innerText;
+                let distance = output_distance.innerText;
+                let copy = document.getElementById("text");
+                copy.value = Direction + ' ' + distance;
+                try {
+                    navigator.clipboard.writeText(copy.value).then(
+                        function () {
+                            Tip("已将计算结果复制至剪贴板");
+                            return;
+                        },
+                        function () {
+                        });
+                } catch (error) {
+                    clipboard.on("success", e => {
+                        Tip("已将计算结果复制至剪贴板");
+                        return;
+                    });
+                    clipboard.on("error", e => {
+                        Tip("复制失败，您的浏览器不支持该功能，请切换浏览器以使用");
+                        return;
+                    });
+                }
+            }
+
+        }
+        $('#menu').hide();
+        function findPoint(Sx, Sy, x0, y0) {
+            let sx = Sx - x0;
+            let sy = Sy - y0;
+            if (sx < 0) {
+                sx = sx * -1;
+            }
+            if (sy < 0) {
+                sy = sy * -1;
+            }
+            return Math.round(Math.sqrt(sx * sx + sy * sy));
+        }
+        $('#food').click(() => {
+            food = true;
+            j.onclick();
+        })
+    </script>
+</body>
+
+</html>
