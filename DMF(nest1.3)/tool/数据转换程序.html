@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let c = new Array(66);
+    a = prompt();
+    a = a.split('\r\n')
+    for (let i = 0; i < a.length; i++) {
+        a[i] = a[i].split(', ');
+    }
+    for (let i = 0; i < a.length; i++) {
+        a[i][1]=d(a[i][1]);
+        a[i][0]=e(a[i][0]);
+    }
+
+    function d(x0) {
+        if (typeof x0 === "string") {
+            if (!(x0.indexOf('W') != -1 && x0.indexOf('w') != -1 && x0.indexOf('e') != -1 && x0.indexOf('E') != -1)) {
+                switch (x0.charAt(x0.length - 1)) {
+                    case "E":
+                        return x0.substring(0, x0.length - 1)*1;
+                    case "e":
+                        return x0.substring(0, x0.length - 1)*1;
+                    case "W":
+                        return x0.substring(0, x0.length - 1) * -1;
+                    case "w":
+                       return  x0.substring(0, x0.length - 1) * -1;
+                    default:
+                }
+            }
+        }
+        
+        console.log(x0);
+    }
+    function e(y0) {
+        if (typeof y0 === "string") {
+            if (!(y0.indexOf('N') != -1 && y0.indexOf('n') != -1 && y0.indexOf('s') != -1 && y0.indexOf('S') != -1)) {
+                switch (y0.charAt(y0.length - 1)) {
+                    case "N":
+                        return y0.substring(0, y0.length - 1)*1
+                        break;
+                    case "n":
+                       return y0.substring(0, y0.length - 1)*1
+                        break;
+                    case "S":
+                        return y0.substring(0, y0.length - 1) * -1
+                        break;
+                    case "s":
+                        return y0.substring(0, y0.length - 1) * -1
+                        break;
+                    default:
+                }
+            }
+        }
+
+    }
+
+
+    console.log(a);
+
+</script>
+
+</html>
