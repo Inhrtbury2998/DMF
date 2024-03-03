@@ -55,7 +55,7 @@
                 <img src="image/map-small.png" class="small-img" alt="" draggable="false">
             </div>
             <div class="" id="big" style="border:3px solid rgb(226, 116, 37);">
-                <img src="image/map-qq.png" alt="">
+                <img src="image/map-big.png" alt="">
             </div>
         </div>
         <div class="div">
@@ -217,6 +217,10 @@
                     115
                 ],
                 [
+                    173,
+                    484
+                ],
+                [
                     218,
                     188
                 ],
@@ -357,6 +361,18 @@
                     -287
                 ],
                 [
+                    -384,
+                    -104
+                ],
+                [
+                    -386,
+                    -124
+                ],
+                [
+                    -382,
+                    -183
+                ],
+                [
                     -217,
                     -306
                 ],
@@ -387,6 +403,14 @@
                 [
                     -394,
                     -153
+                ],
+                [
+                    -411,
+                    -196
+                ],
+                [
+                    -406,
+                    -211
                 ],
                 [
                     -366,
@@ -730,6 +754,7 @@
             Sx = Sx * 1;//将数据隐式转换为number类型
             Sy = Sy * 1;
             if (food) {
+                console.time();
                 let every_point_distance = [];
                 console.log(point.length);
                 for (let i = 0; i < point.length; i++) {
@@ -741,6 +766,7 @@
                 y0 = point[findMinIndex(every_point_distance)][0];
                 endX.value=x0;
                 endY.value=y0;
+                console.timeEnd();
             }
             let b;
             let img_dian1 = have_li1()();
@@ -796,12 +822,6 @@
         function findPoint(Sx, Sy, x0, y0) {
             let sx = Sx - x0;
             let sy = Sy - y0;
-            if (sx < 0) {
-                sx = sx * -1;
-            }
-            if (sy < 0) {
-                sy = sy * -1;
-            }
             return Math.round(Math.sqrt(sx * sx + sy * sy));
         }
         $('#food').click(() => {
